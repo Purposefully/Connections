@@ -1,0 +1,54 @@
+Connections Project
+
+This project is modeled after Padlet but with features to support mathematics learning routines such as "What do you notice?" and "Connection Representations".
+
+**************************************************
+
+MVP Feature List:
+* Login/Registration
+* Authorizations
+* Teacher Features:
+    - Post image as a prompt
+    - Include text for a prompt
+    - Able to format post expectations for students (ie. provide spots for x observations in a post from each student; provide sentence starters)
+    - Able to delete a student's post (if inappropriate)
+    - Choose whether students can "like" posts
+    - Choose whether students must provide a reason for "liking" a post
+    - Choose whether students "like" posts in the same session or on another day
+* Student Features:
+    - Post response to a prompt
+    - View classmates' posts
+    - Like a post belonging to their classmates
+    - Provide justification for their "like"
+* Other General Features:
+    - Order observations on the connect lesson pages by number of likes
+    - Three lesson formats: solo with list, solo with open response, and connect 
+    - Supplies a link and a code for accessing the lessons
+
+****************************************************
+
+Backlog Features:
+* Sign in with Google Classroom
+* Forgot password capability
+* General Features:
+    - If a student "likes" their own post, provide a message ("Of course your ideas are awesome! Please "like" a classmate with similarly amazing thoughts.")
+    - A library of image prompts
+    - Automatic filtering for inappropriate posts
+    - Some kind of "game" to occupy students until enough posts for liking
+* Teacher Features:
+    - Only allow logins with Google Classroom
+    - Choose whether students have the option of being anonymous
+    - Choose whether students can see classmates' posts before posting their own or only after they've posted
+    - Limit the number of "likes" each student may give
+    - Select student posts to keep on page and add another prompt
+    - Able to add to the library
+    - Able to group prompts in the library for easy location in future years
+    - Able to see an individual student report of their responses
+    - Create, edit, and view class lists
+    - View list of students who completed a particular lesson
+* Student Features:
+    - (Pending teacher choice) choose whether they want to be anonymous
+    - Allow them to add additional items to the list
+    - Change the theme
+
+
