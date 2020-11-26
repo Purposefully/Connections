@@ -34,7 +34,9 @@ Backlog Features:
     - If a student "likes" their own post, provide a message ("Of course your ideas are awesome! Please "like" a classmate with similarly amazing thoughts.")
     - A library of image prompts
     - Automatic filtering for inappropriate posts
+    - Use AJAX to keep registration form filled in the case of errors
     - Some kind of "game" to occupy students until enough posts for liking
+    - A way to correct their name or change their password...
 * Teacher Features:
     - Only allow logins with Google Classroom
     - Choose whether students have the option of being anonymous
