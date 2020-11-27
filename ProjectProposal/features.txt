@@ -46,6 +46,7 @@ Backlog Features:
     - Only allow logins with Google Classroom
     - Choose whether students have the option of being anonymous
     - Choose whether students can see classmates' posts before posting their own or only after they've posted
+    - Choose whether teacher has to approve posts first
     - Limit the number of "likes" each student may give
     - Select student posts to keep on page and add another prompt
     - Able to add to the library
