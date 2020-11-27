@@ -9,7 +9,7 @@ class UserManager(models.Manager):
         if len(postData['password']) < 8:
             errors["password"] = "Password must be at least 8 characters long."
         if postData['password'] != postData['confirm_password']:
-            errors["pwd_match"] = "Password must match Confirm PW"
+            errors["pwd_match"] = "Password must match Re-type Password"
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "Email address is invalid."

@@ -20,6 +20,9 @@
         .btn-block{
             display: block;
         }
+        li{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -31,15 +34,24 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Back again?</h5>
                         <h5 class="card-title text-center">Please log in:</h5>
+                        {% if request.session.type == "login" %}
+                            {% if messages %}
+                            <ul>
+                                {%for message in messages %}
+                                    <li>{{message}}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        {% endif %}
                         <form action="/login/" method="POST">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="email" class=".sr-only"></label>
-                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <input type="email" class="form-control" name="email" placeholder="Email">
                             </div>
                             <div class="form-group">
                                 <label for="email" class=".sr-only"></label>
-                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" placeholder="Password">
                             </div>                            
                             <input type="submit" class="btn-color btn-block" value="Log In">
                         </form>
@@ -51,23 +63,32 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">New here?</h5>
                         <h5 class="card-title text-center">Please sign up:</h5>
+                        {% if request.session.type == "signup" %}
+                            {% if messages %}
+                            <ul>
+                                {%for message in messages %}
+                                    <li>{{message}}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        {% endif %}
                         <form action="/login/signup" method="POST">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="name" class=".sr-only"></label>
-                                <input type="text" class="form-control" id="name" placeholder="Name">
+                                <input type="text" class="form-control" name="name" placeholder="Name" value="{{request.session.name}}">
                             </div>
                             <div class="form-group">
                                 <label for="email" class=".sr-only"></label>
-                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <input type="email" class="form-control" name="email" placeholder="Email" value="{{request.session.email}}">
                             </div>
                             <div class="form-group">
                                 <label for="password" class=".sr-only"></label>
-                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" placeholder="Password">
                             </div>
                             <div class="form-group">
                                 <label for="confirm" class=".sr-only"></label>
-                                <input type="password" class="form-control" id="confirm_password" placeholder="Re-type Password">
+                                <input type="password" class="form-control" name="confirm_password" placeholder="Re-type Password">
                             </div>   
                             <input type="submit" class="btn-color btn-block" value="Sign Up">
                         </form>

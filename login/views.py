@@ -14,10 +14,11 @@ def login(request):
                 return redirect('/success')
             else:
                 messages.error(request, "Incorrect password")
-                return redirect('/')
+                return redirect('/login/')
         else:
             messages.error(request, "Email not found")
-            return redirect('/')
+            request.session['type'] = "login"
+            return redirect('/login/')
     return render(request, 'login.html')
 
 def signup(request):
@@ -33,34 +34,23 @@ def signup(request):
         if errors:
             for k, v in errors.items():
                 messages.error(request, v)
-            request.session['first_name'] = request.POST['first_name']
-            request.session['last_name'] = request.POST['last_name']
+            request.session['name'] = request.POST['name']
             request.session['email'] = request.POST['email']
-            request.session['birthday'] = request.POST['birthday']
-            request.session['editing'] = True
-            return redirect('/')
+            request.session['type'] = "signup"
+            return redirect('/login/')
 
         #if no errors, add user to database
         pwdhash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
         User.objects.create(
-            first_name = request.POST['first_name'],
-            last_name = request.POST['last_name'],
+            name = request.POST['name'],
             email = request.POST['email'],
-            birthday = request.POST['birthday'],
             password = pwdhash
         )
         # Remove entries from screen
         request.session.flush()
         request.session['user_id'] = User.objects.last().id
         return redirect('/success')
-    return redirect('/')
-
-def success(request):
-    if 'user_id' in request.session:
-        return render(request, 'student_dashboard.html')
-    else:
-        return redirect('/')
-    #The order of this if-else mattered...
+    return redirect('/login/')
 
 def logout(request):
     request.session.flush()
