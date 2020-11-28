@@ -21,6 +21,19 @@
             display: block;
             width: 130px;
         }
+        .or{
+            margin: 40px 20px;
+        }
+        .line{
+            width: 40%;
+            border-top: 5px dashed #99CDC9;
+            height: 2px;
+        }
+        .round{
+            width: 14px;
+            border-radius: 10px;
+            border-top: 14px solid #99CDC9;
+        }
         </style>
 </head>
 <body>
@@ -32,32 +45,87 @@
                     {% csrf_token %}
                     <div class="form-check">
                         <input type="radio" name="teacher_options" id="new_lesson" class="form-check-input" value="new_lesson" checked>
-                        <label for="new_lesson">Prepare a new lesson</label>
+                        <label for="new_lesson" class="h5 mb-2">Prepare or modify a lesson</label>
                     </div>
-                    <div class="form-check">
-                        <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
-                        <label for="student_work">View student work on a lesson</label>
-                        <label for="select_lesson" class="sr-only">Select lesson</label>
-                        <select name="lesson" id="lesson" class="custom-select is-invalid" aria-describedby="lessonFeedback">
-                            <option selected value="">Choose lesson...</option>
-                            {% for lesson in lessons %}
-                            <option value="{{lesson.id}}">{{lesson.id}}</option>
-                            {% endfor %}
-                        </select>
-                        <div id="lessonFeedback" class="invalid-feedback">
-                            Please select a lesson
+                    <div class="or">
+                        <div class="row">
+                            <hr class="round mr-0 my-auto">
+                            <hr class="line mx-0 my-auto">
+                            <hr class="round ml-0 my-auto">
+                            <h5 class="mx-3 mt-2">OR</h5>
+                            <hr class="round mr-0 my-auto">
+                            <hr class="line mx-0 my-auto">
+                            <hr class="round ml-0 my-auto">
                         </div>
                     </div>
-                    <div class="form-check">
-                        <input type="radio" name="teacher_options" id="post_code" class="form-check-input" value="new_lesson">
-                        <label for="post_code">Post code for a lesson on screen for students</label>
-                        <label for="select_lesson" class="sr-only">Select lesson</label>
-                        <select name="lesson" id="lesson" class="custom-select">
-                            <option selected value="">Choose lesson...</option>
-                            {% for lesson in lessons %}
-                            <option value="{{lesson.id}}">{{lesson.id}}</option>
-                            {% endfor %}
-                        </select>
+                    <h5>View student work on:</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
+                                <label for="student_work">a lesson with a single image</label>
+                                <label for="select_lesson" class="sr-only">Select lesson</label>
+                                <select name="lesson" id="lesson" class="custom-select" aria-describedby="lessonFeedback">
+                                    <option selected value="">Choose lesson...</option>
+                                    {% for lesson in lessons %}
+                                    <option value="{{lesson.id}}">{{lesson.id}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
+                                <label for="student_work">a lesson connecting two images</label>
+                                <label for="select_lesson" class="sr-only">Select lesson</label>
+                                <select name="lesson" id="lesson" class="custom-select" aria-describedby="lessonFeedback">
+                                    <option selected value="">Choose lesson...</option>
+                                    {% for lesson in lessons %}
+                                    <option value="{{lesson.id}}">{{lesson.id}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="or">
+                        <div class="row">
+                            <hr class="round mr-0 my-auto">
+                            <hr class="line mx-0 my-auto">
+                            <hr class="round ml-0 my-auto">
+                            <h5 class="mx-3 mt-2">OR</h5>
+                            <hr class="round mr-0 my-auto">
+                            <hr class="line mx-0 my-auto">
+                            <hr class="round ml-0 my-auto">
+                        </div>
+                    </div>
+                    <h5>Post a code to your screen for students for:</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
+                                <label for="student_work">a lesson with a single image</label>
+                                <label for="select_lesson" class="sr-only">Select lesson</label>
+                                <select name="lesson" id="lesson" class="custom-select" aria-describedby="lessonFeedback">
+                                    <option selected value="">Choose lesson...</option>
+                                    {% for lesson in lessons %}
+                                    <option value="{{lesson.id}}">{{lesson.id}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
+                                <label for="student_work">a lesson connecting two images</label>
+                                <label for="select_lesson" class="sr-only">Select lesson</label>
+                                <select name="lesson" id="lesson" class="custom-select" aria-describedby="lessonFeedback">
+                                    <option selected value="">Choose lesson...</option>
+                                    {% for lesson in lessons %}
+                                    <option value="{{lesson.id}}">{{lesson.id}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <input type="submit" class="btn btn-color btn-bk mx-auto mt-3 font-weight-bold" value="Let's go!">
                 </form>

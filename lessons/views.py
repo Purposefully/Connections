@@ -17,6 +17,6 @@ def teacher_dashboard(request):
 
 def teacher_choice(request):
     if 'user_id' in request.session:
-        return redirect(request, 'teacher_dashboard.html')
+        return redirect(request, 'notice_solo.html')
     else:
         return redirect('/login/')
