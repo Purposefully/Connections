@@ -42,7 +42,7 @@
         <div class="card">
             <div class="card-body">
                 <form action="/teacher_choice" method="GET">
-                    {% csrf_token %}
+                    <!-- {% csrf_token %} -->
                     <div class="form-check">
                         <input type="radio" name="teacher_options" id="new_lesson" class="form-check-input" value="new_lesson" checked>
                         <label for="new_lesson" class="h5 mb-2">Prepare or modify a lesson</label>
@@ -98,12 +98,12 @@
                             <hr class="round ml-0 my-auto">
                         </div>
                     </div>
-                    <h5>Post a code to your screen for students for:</h5>
+                    <h5>Post a code to your screen for students to access:</h5>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-check">
-                                <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
-                                <label for="student_work">a lesson with a single image</label>
+                                <input type="radio" name="teacher_options" id="post_code" class="form-check-input" value="post_code">
+                                <label for="post_code">a lesson with a single image</label>
                                 <label for="select_lesson" class="sr-only">Select lesson</label>
                                 <select name="lesson" id="lesson" class="custom-select" aria-describedby="lessonFeedback">
                                     <option selected value="">Choose lesson...</option>
@@ -115,8 +115,8 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-check">
-                                <input type="radio" name="teacher_options" id="student_work" class="form-check-input" value="student_work">
-                                <label for="student_work">a lesson connecting two images</label>
+                                <input type="radio" name="teacher_options" id="post_code" class="form-check-input" value="post_code">
+                                <label for="post_code">a lesson connecting two images</label>
                                 <label for="select_lesson" class="sr-only">Select lesson</label>
                                 <select name="lesson" id="lesson" class="custom-select" aria-describedby="lessonFeedback">
                                     <option selected value="">Choose lesson...</option>
