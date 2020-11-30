@@ -51,23 +51,22 @@
             </div>
         <div class="card">
             <div class="card-body">
-                <form action="">
-                    {% csrf_token %}
+
+                <!-- Will this work or do I have to handle it server side? -->
+                <!-- I don't know if it can pull the lesson.id or not -->
+                <form action="/lesson/{{lesson.id}}" method="GET">
+
+
+                    <!-- {% csrf_token %} -->
                     <div class="form-inline">
-                        <div class="col">
-                            <label for="select_lesson" class="h4">Select an existing lesson:</label>
-                        </div>
-                        <div class="co">
-                            <select name="lesson" id="lesson" class="custom-select">
-                                <option value="">Choose lesson...</option>
-                                {% for lesson in lessons %}
-                                <option value="{{lesson.id}}">{{lesson.id}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col">
-                            <input type="submit" class="btn btn-color font-weight-bold" value="Preview and Edit">
-                        </div>
+                        <label for="select_lesson" class="h4 mr-2">Select an existing lesson:</label>
+                        <select name="lesson" id="lesson" class="custom-select mr-2">
+                            <option value="">Choose lesson...</option>
+                            {% for lesson in lessons %}
+                            <option value="{{lesson.id}}">{{lesson.id}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" class="btn btn-color font-weight-bold" value="Preview and Edit">
                     </div>
                 </form>
                 <div class="or">
@@ -86,8 +85,12 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text center">Lesson with Single Image</h5>
-                            <form action="">
-                                {% csrf_token %}
+
+                            <!-- Will this work or do I have to handle 
+                            lesson type on server side? -->
+                            <form action="/new_lesson" method="GET">
+
+                                <!-- {% csrf_token %} -->
                                 <p>Select type of student response desired:</p>
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="lesson_type" value="open" id="open">
@@ -104,15 +107,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text center">Connect 2 Images</h5>
-                            <form action="">
-                                {% csrf_token %}
+                            <form action="/new_lesson/connect" method="GET">
+                                <!-- {% csrf_token %} -->
                                 <label for="lessons">Select 2 lessons</label>
                                 <select class="custom-select" id="lessons" multiple>
-                                    <option value="" selected>Choose 2</option>
+                                    <option value="" aria-describedby="multiple_help" selected>Choose 2</option>
                                     {% for lesson in lessons %}
                                     <option value="{{lesson.id}}">{{lesson.id}}</option>
                                     {% endfor %}
                                 </select>
+                                <small id="multiple_help" class="form-text text-muted">Hold down the Control or Command button while selecting two lessons.</small>
                                 <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Preview and Edit">
                             </form>
                         </div>

@@ -34,8 +34,14 @@ def teacher_choice(request):
     else:
         return redirect('/login/')
 
-# def new_lesson(request):
+def new_lesson(request):
+    if 'user_id' in request.session:
+
+        if request.GET['lesson_type'] == "open":
+            return render(request, 'notice_solo.html')
+
+# def solo_lesson(request, lesson_type):
 #     if 'user_id' in request.session:
-#         if request.method == "POST":
-#             pass
-#         return render(request, 'new_lesson.html')
+
+#         if request.GET == "open":
+#             return render(request, 'solo_open.html')

@@ -5,5 +5,6 @@ urlpatterns = [
     path('', views.index),
     path('student_dashboard', views.student_dashboard),
     path('teacher_dashboard', views.teacher_dashboard),
-    path('teacher_choice', views.teacher_choice)
+    path('teacher_choice', views.teacher_choice),
+    path('new_lesson', views.new_lesson)
 ]
