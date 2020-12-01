@@ -41,8 +41,8 @@
     <div class="container d-flex justify-content-center">
         <div class="card">
             <div class="card-body">
-                <form action="/teacher_choice" method="GET">
-                    <!-- {% csrf_token %} -->
+                <form action="/teacher_choice" method="POST">
+                    {% csrf_token %}
                     <div class="form-check">
                         <input type="radio" name="teacher_options" id="new_lesson" class="form-check-input" value="new_lesson" checked>
                         <label for="new_lesson" class="h5 mb-2">Prepare or modify a lesson</label>
