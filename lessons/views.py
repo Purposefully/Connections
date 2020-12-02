@@ -46,8 +46,10 @@ def new_lesson(request):
         if request.GET['lesson_type'] == "open":
             return render(request, 'notice_solo.html')
 
-# def solo_lesson(request, lesson_type):
-#     if 'user_id' in request.session:
+def solo_lesson_setup(request):
+    if 'user_id' in request.session:
 
-#         if request.GET == "open":
-#             return render(request, 'solo_open.html')
+        if request.method == "POST":
+            pass
+    pass
+    return render(request, 'notice_solo.html')

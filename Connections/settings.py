@@ -54,6 +54,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Connections.urls'
 
+# MEDIA lines are so that images can be stored in my lessons model
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
