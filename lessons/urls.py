@@ -7,5 +7,6 @@ urlpatterns = [
     path('teacher_dashboard', views.teacher_dashboard),
     path('teacher_choice', views.teacher_choice),
     path('new_lesson', views.new_lesson),
-    path('solo_lesson_setup', views.solo_lesson_setup)
+    path('solo_lesson_setup', views.solo_lesson_setup),
+    path('success', views.success)
 ]

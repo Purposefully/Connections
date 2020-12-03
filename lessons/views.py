@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .forms import ImageForm
+from .models import Lesson, User
 
 def index(request):
     return render(request, 'index.html')
@@ -48,8 +51,39 @@ def new_lesson(request):
 
 def solo_lesson_setup(request):
     if 'user_id' in request.session:
-
         if request.method == "POST":
-            pass
-    pass
-    return render(request, 'notice_solo.html')
+            form = ImageForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                new_lesson = form.save(commit=False)
+                # save defaults for other settings for now
+                # attach the one to many user field data
+                new_lesson.user = User.objects.get(id=1)
+                new_lesson.save()
+
+                info = {
+                    'image' : request.FILES,
+                    'heading' : request.POST['heading'],
+                    'content' : request.POST['content']
+                }
+                context = {
+                    'info' : info
+                }
+                return render(request, 'notice_solo.html', context)
+            
+    else:
+        form = ImageForm()
+    return render(request, 'notice_solo.html', {'form':form})
+
+# def success(request):
+#     context = {
+#         'info' : Lesson.objects.last(),
+#     }
+#     return render(request, 'success.html', context)
+#         if request.method == "POST":
+#             pass
+#     pass
+#     return render(request, 'notice_solo.html')
+
+def success(request):
+        return HttpResponse("Success!")
