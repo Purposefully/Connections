@@ -1,7 +1,7 @@
 from django import forms
-from .models import Lesson, User
+from .models import Solo_Lesson, User
 
 class ImageForm(forms.ModelForm):
     class Meta:
-        model = Lesson
+        model = Solo_Lesson
         fields = ['image', 'heading', 'content']

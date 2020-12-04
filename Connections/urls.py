@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('lessons.urls')),
-    path('login/', include('login.urls')),
 ]
 
 if settings.DEBUG:

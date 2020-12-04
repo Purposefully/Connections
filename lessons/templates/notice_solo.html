@@ -94,8 +94,9 @@
                             <div class="mt-4 ml-4 flex-fill image">
                                 <p><label for="image">Click to insert an image:</label></p>
                                 {{form.image}}
-                                {% if img_obj %}
-                                    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+                                {% if info %}
+                                    <p>gets here</p>
+                                    <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
                                 {% endif %}
                             </div>
                         </div>
@@ -104,7 +105,7 @@
                                 {% render_field form.heading placeholder="What do you notice?" class+="h1 mr-5" %}
                                 {% if info.heading %}
                                     <h1>{{info.heading}}</h1>
-                                    {% endif %}
+                                {% endif %}
                                 <p class="helper"><em>(Click on the title to edit.)</em></p>
                             </div>
                             <div>
