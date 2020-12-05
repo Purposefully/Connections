@@ -102,7 +102,7 @@
                     </div>
                     <div class="col">
                         <div id="title" class="mt-2">
-                            <form action="/update_heading" method="POST" id="hdg_form">
+                            <form action="/update_words" method="POST" id="hdg_form">
                                 {% csrf_token %}
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
                                 <input type="text" name="heading" class="h1 mr-5" value="What do you notice?">
@@ -111,7 +111,7 @@
                             </form>
                         </div>
                         <div>
-                            <form action="/update_heading" method="POST" id="dir_form">
+                            <form action="/update_words" method="POST" id="dir_form">
                                 {% csrf_token %}
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
                                 <textarea name="content" id="content" cols="30" rows="10" class="directions">Share what you observe about the image</textarea>
@@ -140,13 +140,13 @@
             </div>
             <div class="opt-solid">
                 <h3>Choose the options you would like to use for this lesson:</h3>
-                <form action="" method="POST">
+                <form action="/update_settings" method="POST">
                     {% csrf_token %}
                     <div class="accordion" id="first_set">
                         <div class="card">
                             <div class="card-header" id="likesHeading">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="likes_allowed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <input type="checkbox" class="custom-control-input" id="likes_allowed" name="likes_allowed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                     <label for="likes_allowed" class="custom-control-label">Allow students to select most impressive posts</label>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                         <div class="card">
                                             <div class="card-header" id="justifyHeading">
                                                 <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="require_justification" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    <input type="checkbox" class="custom-control-input" name="justification_required" id="require_justification" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                                     <label for="require_justification" class="custom-control-label">Require a justification for each selection</label>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="single_session">
+                                    <input type="checkbox" class="custom-control-input" id="single_session" name="like_same_day">
                                     <label for="single_session" class="custom-control-label">Students select most impressive posts immediately after posting (rather than returning to do it on another day, maybe to allow for asynchronous posting).</label>
                                 </div>
                             </div>
@@ -195,7 +195,7 @@
                                     <div class="form-inline">
                                         <label for="title">Lesson Name:</label>
                                         <input type="text" name="title" class="mx-2">
-                                        <input type="submit" value="Create" class="btn btn-color">
+                                        <input type="submit" value="Create and Preview" class="btn btn-color">
                                     </div>
                                 </div>
                                     <a href="/teacher_choice" class="mx-2 align-self-center">Previous Screen</a>
@@ -245,7 +245,7 @@
         $(document).on("change", "#hdg-form", function(e){
             e.preventDefault()
             $.ajax({
-                url: 'update_heading',
+                url: 'update_words',
                 method: 'POST',
                 data: $(this).serialize(),
                 beforeSend: function(){
@@ -266,7 +266,7 @@
         $(document).on("change","#dir-form", function(e){
             e.preventDefault()
             $.ajax({
-                url: 'update_heading',
+                url: 'update_words',
                 method: 'POST',
                 data: $(this).serialize(),
                 beforeSend: function(){

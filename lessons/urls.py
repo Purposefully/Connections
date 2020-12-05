@@ -10,6 +10,7 @@ urlpatterns = [
     path('teacher_choice', views.teacher_choice),
     path('new_lesson', views.new_lesson),
     path('insert_image', views.insert_image),
-    path('update_heading', views.update_heading),
-    # path('update_solo_lesson_heading', views.update_solo_lesson)
+    path('update_words', views.update_words),
+    path('update_settings', views.update_settings),
+    path('preview_solo_lesson/<int:lesson_id>', views.preview_solo_lesson)
 ]

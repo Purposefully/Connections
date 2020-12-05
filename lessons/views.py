@@ -108,10 +108,7 @@ def new_lesson(request):
         if request.GET['lesson_type'] == "open":
             context = {
                 'img_form': ImageForm(),
-                # 'hdg_form': HeadingForm(),
-                # 'dir_form': ContentForm()
             }
-            
             return render(request, 'notice_solo.html', context)
 
 def insert_image(request):
@@ -128,6 +125,9 @@ def insert_image(request):
                 new_lesson.user = User.objects.get(id=request.session['user_id'])
                 new_lesson.save()
 
+                request.session['current_lesson'] = new_lesson.id
+                print(request.session['current_lesson'])
+
                 context = {
                     'info' : new_lesson,
                 }
@@ -139,11 +139,12 @@ def insert_image(request):
         print("this is where it ends up")
         return render(request, 'notice_solo.html', {'form':form})
 
-def update_heading(request):
+def update_words(request):
     if 'user_id' in request.session:
         if request.method == "POST":
 
             print(request.POST)
+            print(request.session['current_lesson'])
             print("getting here")
             this_lesson = Solo_Lesson.objects.get(id=request.POST['solo_lesson_id'])
 
@@ -170,4 +171,44 @@ def update_heading(request):
         else:
             form = ImageForm()
 
-    return render(request, 'notice_solo.html', {'form':form})                
+    return render(request, 'notice_solo.html', {'form':form})
+
+def update_settings(request):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            this_lesson = Solo_Lesson.objects.get(id=request.session['current_lesson'])
+
+            if 'likes_allowed' in request.POST:
+                if request.POST['likes_allowed'] == 'on':
+                    this_lesson.likes_allowed = True
+                else:
+                    this_lesson.likes_allowed = False
+
+            if 'justification_required' in request.POST:
+                    if request.POST['justification_required'] == 'on':
+                        this_lesson.justification_required = True
+                    else:
+                        this_lesson.justification_required = False
+
+            if 'like_same_day' in request.POST:
+                    if request.POST['like_same_day'] == 'on':
+                        this_lesson.like_same_day = True
+                    else:
+                        this_lesson.like_same_day= False
+
+            this_lesson.max_likes = request.POST['number_likes']
+            this_lesson.justification_text = request.POST['prompt']
+            this_lesson.title = request.POST['title']
+            this_lesson.save()
+
+            return redirect(f"/preview_solo_lesson/{this_lesson.id}")
+
+    return redirect(request, '/login/')
+
+def preview_solo_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        # lesson_id = request.session["current_lesson"]
+        context = {
+            'lesson': Solo_Lesson.objects.get(id=lesson_id)
+        }
+        return render(request, 'solo_preview.html', context)

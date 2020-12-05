@@ -1,5 +1,5 @@
 <div class="form-rep">
-    <form action="/update_solo_lesson_directions" method="POST" id="dir-form">
+    <form action="/update_words" method="POST" id="dir-form">
         {% csrf_token %}
         <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
         <textarea name="content" id="content" cols="30" rows="10" class="directions" placeholder="Share what you observe about the image">{{info.content}}</textarea>
