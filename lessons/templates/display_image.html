@@ -1,13 +1,11 @@
 <div class="hdr-solid" id="replace">
-    {% load widget_tweaks %}
     <div class="row flex-row">
         <div class="col">
             <div class="mt-4 ml-4 flex-fill image" id="img-div">
-                <form action="/solo_lesson_setup" method="POST" id="top_form" enctype="multipart/form-data">
+                <form action="/insert_image" method="POST" id="image_form" enctype="multipart/form-data">
                     {% csrf_token %}
                     <p><label for="image">Click to insert an image:</label></p>
                     {{img_form.image}}
-                    <p>Made it here</p>
                     {% if info %}
                         <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
                     {% endif %}
@@ -15,27 +13,22 @@
             </div>
         </div>
         <div class="col">
-            <div id="title" class="mt-2" id="hdg-div">
-                <form action="/update_heading" method="POST" id="heading_form">
+            <div id="title" class="mt-2">
+                <form action="/update_heading" method="POST" id="hdg-form" class="form-rep">
                     {% csrf_token %}
-                    {% render_field hdg_form.heading placeholder="What do you notice?" value="{{info.heading}}" class+="h1 mr-5" %}
-                    {% if info.heading %}
-                        <h1>{{info.heading}}</h1>
-                    {% endif %}
+                    <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
+                    <input type="text" name="heading" placeholder="{{info.value}}" value="{{info.value}}" class="h1 mr-5">
                     <p class="helper"><em>(Feel free to edit the title.)</em></p>
                 </form>
             </div>
             <div>
-                <form action="/update_heading" method="POST" id="dir_form">
+                <form action="/update_heading" method="POST" id="dir-form">
                     {% csrf_token %}
-                    {% render_field dir_form.content class+="directions" placeholder="Share what you observe about the image." %}
-                    {% if info.content %}
-                        <p>{{info.content}}</p>
-                    {% endif %}
+                    <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
+                    <textarea name="content" cols="30" rows="10" class="directions">{{info.content}}</textarea>
                     <p class="helper"><em>(Feel free to edit the directions in the box above.)</em></p>
                 </form>
             </div>
-            <input type="submit">
         </div>
     </div>
     <div class="row">

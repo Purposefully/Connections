@@ -9,6 +9,7 @@ urlpatterns = [
     path('teacher_dashboard', views.teacher_dashboard),
     path('teacher_choice', views.teacher_choice),
     path('new_lesson', views.new_lesson),
-    path('solo_lesson_setup', views.solo_lesson_setup),
-    path('update_solo_lesson_heading', views.update_solo_lesson)
+    path('insert_image', views.insert_image),
+    path('update_heading', views.update_heading),
+    # path('update_solo_lesson_heading', views.update_solo_lesson)
 ]

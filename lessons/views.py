@@ -108,16 +108,16 @@ def new_lesson(request):
         if request.GET['lesson_type'] == "open":
             context = {
                 'img_form': ImageForm(),
-                'hdg_form': HeadingForm(),
-                'dir_form': ContentForm()
+                # 'hdg_form': HeadingForm(),
+                # 'dir_form': ContentForm()
             }
             
             return render(request, 'notice_solo.html', context)
 
-def solo_lesson_setup(request):
+def insert_image(request):
     if 'user_id' in request.session:
         if request.method == "POST":
-            form = ImageForm(request.FILES)
+            form = ImageForm(request.POST, request.FILES)
             print(request.FILES)
 
             if form.is_valid():
@@ -130,10 +130,8 @@ def solo_lesson_setup(request):
 
                 context = {
                     'info' : new_lesson,
-                    'hdg_form': HeadingForm(),
-                    'dir_form': ContentForm()
                 }
-                return render(request, 'solo_lesson_update.html', context)
+                return render(request, 'display_image.html', context)
 
         else:
             print("nope, not valid")
@@ -141,22 +139,34 @@ def solo_lesson_setup(request):
         print("this is where it ends up")
         return render(request, 'notice_solo.html', {'form':form})
 
-def update_solo_lesson(request):
+def update_heading(request):
     if 'user_id' in request.session:
         if request.method == "POST":
-            form = WordForm(request.POST)
 
-            if form.is_valid():
-                this_lesson = Solo_Lesson.objects.get(id=form.cleaned_data['solo_lesson_id'])
-                this_lesson.heading = form.cleaned_data['heading']
+            print(request.POST)
+            print("getting here")
+            this_lesson = Solo_Lesson.objects.get(id=request.POST['solo_lesson_id'])
+
+            if 'heading' in request.POST:
+                print("inside heading branch")
+                this_lesson.heading = request.POST['heading']
+                this_lesson.save()
+                context = {
+                    'info' : this_lesson
+                }
+                return render(request, 'update_heading.html', context)
+
+            if 'content' in request.POST:
+                this_lesson.content = request.POST['content']
                 this_lesson.save()
 
-                form = WordForm(request.POST)
+                print(this_lesson.heading)
+
                 context = {
-                    'info' : this_lesson,
-                    'form' : form
+                    'info' : this_lesson
                 }
-                return render(request, 'solo_lesson_update.html', context)
+                return render(request, 'update_directions.html', context)
+
         else:
             form = ImageForm()
 

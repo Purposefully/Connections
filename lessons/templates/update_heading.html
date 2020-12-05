@@ -1,0 +1,8 @@
+<div id="title" class="mt-2" id="hdg-div">
+    <form action="/update_heading" method="POST" id="heading_form">
+        {% csrf_token %}
+        <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
+        <input type="text" name="heading" placeholder="{{info.heading}}" value="{{info.heading}}" class="h1 mr-5">
+        <p class="helper"><em>(Feel free to edit the title.)</em></p>
+    </form>
+</div>

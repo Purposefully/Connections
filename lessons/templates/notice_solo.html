@@ -87,11 +87,10 @@
     <div class="container d-flex">
         <div class="flex-col flex-fill">
             <div class="hdr-solid" id="replace">
-                {% load widget_tweaks %}
                 <div class="row flex-row">
                     <div class="col">
-                        <div class="mt-4 ml-4 flex-fill image">
-                            <form action="/solo_lesson_setup" method="POST" id="image_form" enctype="multipart/form-data">
+                        <div class="mt-4 ml-4 flex-fill image" id="img-div">
+                            <form action="/insert_image" method="POST" id="image_form" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <p><label for="image">Click to insert an image:</label></p>
                                 {{img_form.image}}
@@ -103,28 +102,23 @@
                     </div>
                     <div class="col">
                         <div id="title" class="mt-2">
-                            <form action="/update_solo_lesson_heading" method="POST" id="heading_form">
+                            <form action="/update_heading" method="POST" id="hdg_form">
                                 {% csrf_token %}
-                                {% render_field hdg_form.heading placeholder="What do you notice?" class+="h1 mr-5" %}
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
-                                <!-- {% if info.heading %}
-                                    <h1>{{info.heading}}</h1>
-                                {% endif %} -->
+                                <input type="text" name="heading" class="h1 mr-5" value="What do you notice?">
                                 <p class="helper"><em>(Feel free to edit the title.)</em></p>
+                                <input type="submit">
                             </form>
                         </div>
                         <div>
-                            <form action="/update_solo_lesson_directions" method="POST" id="directions_form">
+                            <form action="/update_heading" method="POST" id="dir_form">
                                 {% csrf_token %}
-                                {% render_field dir_form.content class+="directions" placeholder="Share what you observe about the image." %}
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
-                                {% if info.content %}
-                                    <p>{{info.content}}</p>
-                                {% endif %}
+                                <textarea name="content" id="content" cols="30" rows="10" class="directions">Share what you observe about the image</textarea>
                                 <p class="helper"><em>(Feel free to edit the directions in the box above.)</em></p>
+                                <input type="submit">
                             </form>
                         </div>
-                        <input type="submit">
                     </div>
                 </div>
                 <div class="row">
@@ -228,7 +222,7 @@
             e.preventDefault()
             var data = new FormData($('#image_form')[0]);
             $.ajax({
-                url: 'solo_lesson_setup',
+                url: 'insert_image',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -247,26 +241,48 @@
             })
             $(this).trigger('reset')
         })
-        // $(document).on("change", "#heading_form", function(e){
-        //     e.preventDefault()
-        //     $.ajax({
-        //         url: 'update_solo_lesson_heading',
-        //         method: 'POST',
-        //         data: $(this).serialize(),
-        //         beforeSend: function(){
-        //             alert("Before send");
-        //         },
-        //         success: function(serverResponse){
-        //             console.log("this is the server's response", serverResponse)
-        //             $('#replace').html(serverResponse)
-        //         },
-        //         error: function(){
-        //             alert("failed");
-        //             console.log(data)
-        //         }
-        //     })
-        //     $(this).trigger('reset')
-        // })
+
+        $(document).on("change", "#hdg-form", function(e){
+            e.preventDefault()
+            $.ajax({
+                url: 'update_heading',
+                method: 'POST',
+                data: $(this).serialize(),
+                beforeSend: function(){
+                    alert("Before send");
+                },
+                success: function(serverResponse){
+                    console.log("this is the server's response", serverResponse)
+                    $('#hdg-form').html(serverResponse)
+                },
+                error: function(){
+                    alert("failed");
+                    console.log(data)
+                }
+            })
+            $(this).trigger('reset')
+        })
+
+        $(document).on("change","#dir-form", function(e){
+            e.preventDefault()
+            $.ajax({
+                url: 'update_heading',
+                method: 'POST',
+                data: $(this).serialize(),
+                beforeSend: function(){
+                    alert("Before send");
+                },
+                success: function(serverResponse){
+                    console.log("this is the server's response", serverResponse)
+                    $('#dir-form').html(serverResponse)
+                },
+                error: function(){
+                    alert("failed");
+                    console.log(data)
+                }
+            })
+            $(this).trigger('reset')
+        })
 
     </script>
 </body>

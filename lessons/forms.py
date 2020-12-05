@@ -6,12 +6,12 @@ class ImageForm(forms.ModelForm):
         model = Solo_Lesson
         fields = ['image']
 
-class HeadingForm(forms.ModelForm):
-    class Meta:
-        model = Solo_Lesson
-        fields = ['heading']
+# class HeadingForm(forms.ModelForm):
+#     class Meta:
+#         model = Solo_Lesson
+#         fields = ['heading']
 
-class ContentForm(forms.ModelForm):
-    class Meta:
-        model = Solo_Lesson
-        fields = ['content']
+# class ContentForm(forms.ModelForm):
+#     class Meta:
+#         model = Solo_Lesson
+#         fields = ['content']
