@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
     <title>What Do You Notice?</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% load static %}
     <style>
         body{
@@ -83,41 +84,48 @@
     </style>
 </head>
 <body>
-    {% load widget_tweaks %}
     <div class="container d-flex">
         <div class="flex-col flex-fill">
-            <div class="hdr-solid">
-                <form action="/solo_lesson_setup" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="row flex-row">
-                        <div class="col">
-                            <div class="mt-4 ml-4 flex-fill image">
+            <div class="hdr-solid" id="replace">
+                {% load widget_tweaks %}
+                <div class="row flex-row">
+                    <div class="col">
+                        <div class="mt-4 ml-4 flex-fill image">
+                            <form action="/solo_lesson_setup" method="POST" id="image_form" enctype="multipart/form-data">
+                                {% csrf_token %}
                                 <p><label for="image">Click to insert an image:</label></p>
-                                {{form.image}}
+                                {{img_form.image}}
                                 {% if info %}
-                                    <p>gets here</p>
                                     <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
                                 {% endif %}
-                            </div>
+                            </form>
                         </div>
-                        <div class="col">
-                            <div id="title" class="mt-2">
-                                {% render_field form.heading placeholder="What do you notice?" class+="h1 mr-5" %}
-                                {% if info.heading %}
+                    </div>
+                    <div class="col">
+                        <div id="title" class="mt-2">
+                            <form action="/update_solo_lesson_heading" method="POST" id="heading_form">
+                                {% csrf_token %}
+                                {% render_field hdg_form.heading placeholder="What do you notice?" class+="h1 mr-5" %}
+                                <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
+                                <!-- {% if info.heading %}
                                     <h1>{{info.heading}}</h1>
-                                {% endif %}
-                                <p class="helper"><em>(Click on the title to edit.)</em></p>
-                            </div>
-                            <div>
-                                {% render_field form.content class+="directions" placeholder="Share what you observe about the image." %}
+                                {% endif %} -->
+                                <p class="helper"><em>(Feel free to edit the title.)</em></p>
+                            </form>
+                        </div>
+                        <div>
+                            <form action="/update_solo_lesson_directions" method="POST" id="directions_form">
+                                {% csrf_token %}
+                                {% render_field dir_form.content class+="directions" placeholder="Share what you observe about the image." %}
+                                <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
                                 {% if info.content %}
                                     <p>{{info.content}}</p>
                                 {% endif %}
                                 <p class="helper"><em>(Feel free to edit the directions in the box above.)</em></p>
-                            </div>
-                            <input type="submit">
+                            </form>
                         </div>
-                    </form>
+                        <input type="submit">
+                    </div>
                 </div>
                 <div class="row">
                     <div class="hdr-divide flex-fill">
@@ -211,8 +219,55 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).on("change", "#image_form", function(e){
+            e.preventDefault()
+            var data = new FormData($('#image_form')[0]);
+            $.ajax({
+                url: 'solo_lesson_setup',
+                method: 'POST',
+                data: data,
+                processData: false,
+                contentType: false,
+                beforeSend: function(){
+                    alert("Before send");
+                },
+                success: function(serverResponse){
+                    console.log("this is the server's response", serverResponse)
+                    $('#replace').html(serverResponse)
+                },
+                error: function(){
+                    alert("failed");
+                    console.log(data)
+                }
+            })
+            $(this).trigger('reset')
+        })
+        // $(document).on("change", "#heading_form", function(e){
+        //     e.preventDefault()
+        //     $.ajax({
+        //         url: 'update_solo_lesson_heading',
+        //         method: 'POST',
+        //         data: $(this).serialize(),
+        //         beforeSend: function(){
+        //             alert("Before send");
+        //         },
+        //         success: function(serverResponse){
+        //             console.log("this is the server's response", serverResponse)
+        //             $('#replace').html(serverResponse)
+        //         },
+        //         error: function(){
+        //             alert("failed");
+        //             console.log(data)
+        //         }
+        //     })
+        //     $(this).trigger('reset')
+        // })
+
+    </script>
 </body>
 </html>

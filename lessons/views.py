@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import ImageForm
+from .forms import *
 from django.contrib import messages
 from .models import *
 import bcrypt
@@ -106,15 +106,22 @@ def new_lesson(request):
     if 'user_id' in request.session:
 
         if request.GET['lesson_type'] == "open":
-            form = ImageForm()
-            return render(request, 'notice_solo.html', {'form':form})
+            context = {
+                'img_form': ImageForm(),
+                'hdg_form': HeadingForm(),
+                'dir_form': ContentForm()
+            }
+            
+            return render(request, 'notice_solo.html', context)
 
 def solo_lesson_setup(request):
     if 'user_id' in request.session:
         if request.method == "POST":
-            form = ImageForm(request.POST, request.FILES)
+            form = ImageForm(request.FILES)
+            print(request.FILES)
 
             if form.is_valid():
+                print("form is valid")
                 new_lesson = form.save(commit=False)
                 # save defaults for other settings for now
                 # attach the one to many user field data
@@ -122,24 +129,35 @@ def solo_lesson_setup(request):
                 new_lesson.save()
 
                 context = {
-                    'info' : new_lesson
+                    'info' : new_lesson,
+                    'hdg_form': HeadingForm(),
+                    'dir_form': ContentForm()
                 }
-                return render(request, 'notice_solo.html', context)
+                return render(request, 'solo_lesson_update.html', context)
 
+        else:
+            print("nope, not valid")
+            form = ImageForm()
+        print("this is where it ends up")
+        return render(request, 'notice_solo.html', {'form':form})
+
+def update_solo_lesson(request):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            form = WordForm(request.POST)
+
+            if form.is_valid():
+                this_lesson = Solo_Lesson.objects.get(id=form.cleaned_data['solo_lesson_id'])
+                this_lesson.heading = form.cleaned_data['heading']
+                this_lesson.save()
+
+                form = WordForm(request.POST)
+                context = {
+                    'info' : this_lesson,
+                    'form' : form
+                }
+                return render(request, 'solo_lesson_update.html', context)
         else:
             form = ImageForm()
 
-    return render(request, 'notice_solo.html', {'form':form})
-
-# def success(request):
-#     context = {
-#         'info' : Lesson.objects.last(),
-#     }
-#     return render(request, 'success.html', context)
-#         if request.method == "POST":
-#             pass
-#     pass
-#     return render(request, 'notice_solo.html')
-
-def success(request):
-        return HttpResponse("Success!")
+    return render(request, 'notice_solo.html', {'form':form})                
