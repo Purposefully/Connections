@@ -12,5 +12,6 @@ urlpatterns = [
     path('insert_image', views.insert_image),
     path('update_words', views.update_words),
     path('update_settings', views.update_settings),
-    path('preview_solo_lesson/<int:lesson_id>', views.preview_solo_lesson)
+    path('preview_solo_lesson/<int:lesson_id>', views.preview_solo_lesson),
+    path('revise_solo', views.revise_solo)
 ]

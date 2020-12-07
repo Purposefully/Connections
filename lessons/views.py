@@ -175,7 +175,9 @@ def update_words(request):
 
 def update_settings(request):
     if 'user_id' in request.session:
+        print("it does get here")
         if request.method == "POST":
+            print(request.POST)
             this_lesson = Solo_Lesson.objects.get(id=request.session['current_lesson'])
 
             if 'likes_allowed' in request.POST:
@@ -207,8 +209,31 @@ def update_settings(request):
 
 def preview_solo_lesson(request, lesson_id):
     if 'user_id' in request.session:
-        # lesson_id = request.session["current_lesson"]
+        lesson = Solo_Lesson.objects.get(id=lesson_id)
+        print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day)
         context = {
             'lesson': Solo_Lesson.objects.get(id=lesson_id)
         }
         return render(request, 'solo_preview.html', context)
+
+def revise_solo(request):
+        if 'user_id' in request.session:
+            lesson = Solo_Lesson.objects.last()
+            likes = justification = same_day = False
+            if lesson.likes_allowed == True:
+                likes = "checked"
+
+            if lesson.justification_required == True:
+                justification = "checked"
+
+            if lesson.like_same_day == True:
+                same_day = "checked"
+            print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day)
+            print(likes, justification, same_day)
+            context = {
+                'info': Solo_Lesson.objects.last(),
+                'likes': likes,
+                'justification': justification,
+                'same_day': same_day
+            }
+        return render(request, 'revise_solo.html', context)

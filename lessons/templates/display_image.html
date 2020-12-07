@@ -17,7 +17,7 @@
                 <form action="/update_words" method="POST" id="hdg-form" class="form-rep">
                     {% csrf_token %}
                     <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
-                    <input type="text" name="heading" placeholder="{{info.value}}" value="{{info.value}}" class="h1 mr-5">
+                    <input type="text" name="heading" placeholder="{{info.heading}}" value="{{info.heading}}" class="h1 mr-5">
                     <p class="helper"><em>(Feel free to edit the title.)</em></p>
                 </form>
             </div>

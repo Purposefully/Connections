@@ -90,14 +90,7 @@
                 <div class="row flex-row">
                     <div class="col">
                         <div class="mt-4 ml-4 flex-fill image" id="img-div">
-                            <form action="/insert_image" method="POST" id="image_form" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <p><label for="image">Click to insert an image:</label></p>
-                                {{img_form.image}}
-                                {% if info %}
-                                    <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
-                                {% endif %}
-                            </form>
+                            <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
                         </div>
                     </div>
                     <div class="col">
@@ -105,18 +98,16 @@
                             <form action="/update_words" method="POST" id="hdg-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
-                                <input type="text" name="heading" class="h1 mr-5" value="What do you notice?">
+                                <input type="text" name="heading" class="h1 mr-5" placeholder="{{info.heading}}" value="{{info.heading}}">
                                 <p class="helper"><em>(Feel free to edit the title.)</em></p>
-                                <input type="submit">
                             </form>
                         </div>
                         <div>
                             <form action="/update_words" method="POST" id="dir-form">
                                 {% csrf_token %}
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
-                                <textarea name="content" id="content" cols="30" rows="10" class="directions">Share what you observe about the image</textarea>
+                                <textarea name="content" id="content" cols="30" rows="10" class="directions" placeholder="Share what you observe about the image">{{info.content}}</textarea>
                                 <p class="helper"><em>(Feel free to edit the directions in the box above.)</em></p>
-                                <input type="submit">
                             </form>
                         </div>
                     </div>
@@ -140,17 +131,25 @@
             </div>
             <div class="opt-solid">
                 <h3>Choose the options you would like to use for this lesson:</h3>
-                <form action="/update_settings" method="POST">
+                <form action="/update_settings" method="POST" id="settings">
                     {% csrf_token %}
                     <div class="accordion" id="first_set">
                         <div class="card">
                             <div class="card-header" id="likesHeading">
                                 <div class="custom-control custom-switch">
+                                    {% if likes %}
+                                    <input type="checkbox" class="custom-control-input" id="likes_allowed" name="likes_allowed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" checked>
+                                    {% else %}
                                     <input type="checkbox" class="custom-control-input" id="likes_allowed" name="likes_allowed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    {% endif %}
                                     <label for="likes_allowed" class="custom-control-label">Allow students to select most impressive posts</label>
                                 </div>
                             </div>
+                            {% if likes %}
+                            <div class="collapse show" id="collapseOne" aria-labelledby="likesHeading" data-parent="#first_set">
+                            {% else %}
                             <div class="collapse hide" id="collapseOne" aria-labelledby="likesHeading" data-parent="#first_set">
+                            {% endif %}
                                 <div class="card-body indent">
                                     <div class="form-inline">
                                         <label for="number_likes">Maximum number of posts they can select</label>
@@ -165,14 +164,22 @@
                                         <div class="card">
                                             <div class="card-header" id="justifyHeading">
                                                 <div class="custom-control custom-switch">
+                                                    {% if justification %}
+                                                    <input type="checkbox" class="custom-control-input" name="justification_required" id="require_justification" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" checked>
+                                                    {% else %}
                                                     <input type="checkbox" class="custom-control-input" name="justification_required" id="require_justification" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    {% endif %}
                                                     <label for="require_justification" class="custom-control-label">Require a justification for each selection</label>
                                                 </div>
                                             </div>
+                                            {% if justification %}
+                                            <div class="collapse show" id="collapseTwo" aria-labelledby="justifyHeading" data-parent="#nested_set">
+                                            {% else %}
                                             <div class="collapse hide" id="collapseTwo" aria-labelledby="justifyHeading" data-parent="#nested_set">
+                                            {% endif %}
                                                 <div class="card-body indent">
                                                     <p>Feel free to edit text in the justification prompt:</p>
-                                                    <textarea name="prompt" id="prompt" cols="50" rows="2" class="form-control">I think this observation is significant because ... </textarea>
+                                                    <textarea name="prompt" id="prompt" cols="50" rows="2" class="form-control">{{info.justification_text}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +190,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="custom-control custom-switch">
+                                    {% if same_day %}
+                                    <input type="checkbox" class="custom-control-input" id="single_session" name="like_same_day" checked>
+                                    {% else %}
                                     <input type="checkbox" class="custom-control-input" id="single_session" name="like_same_day">
+                                    {% endif %}
                                     <label for="single_session" class="custom-control-label">Students select most impressive posts immediately after posting (rather than returning to do it on another day, maybe to allow for asynchronous posting).</label>
                                 </div>
                             </div>
@@ -194,7 +205,7 @@
                                 <div class="flex-grow-1 justify-content-start">
                                     <div class="form-inline">
                                         <label for="title">Lesson Name:</label>
-                                        <input type="text" name="title" class="mx-2">
+                                        <input type="text" name="title" value="{{info.title}}" class="mx-2">
                                         <input type="submit" value="Create and Preview" class="btn btn-color">
                                     </div>
                                 </div>
@@ -281,6 +292,16 @@
                     console.log(data)
                 }
             })
+            $(this).trigger('reset')
+        })
+        $('form input:checkbox').change(function(){
+
+            if($(this).prop('checked')){
+                $(this).html("<input type='hidden' name='likes_allowed' value='on'>");
+            }
+            else{
+                $(this).html("<input type='hidden' name='likes_allowed' value='off'>")
+            }
             $(this).trigger('reset')
         })
 

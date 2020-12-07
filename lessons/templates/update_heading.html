@@ -1,5 +1,5 @@
 <div id="title" class="mt-2" id="hdg-div">
-    <form action="/update_wotrds" method="POST" id="heading_form">
+    <form action="/update_words" method="POST" id="hdg-form">
         {% csrf_token %}
         <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
         <input type="text" name="heading" placeholder="{{info.heading}}" value="{{info.heading}}" class="h1 mr-5">

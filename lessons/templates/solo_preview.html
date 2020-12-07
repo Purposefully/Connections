@@ -32,7 +32,7 @@
             background-color: #fcf8e3;
         }
         .line{
-            width: 97%;
+            width: 95%;
             border-top: 5px solid #fcf8e3;
             height: 4px;
             display: inline-block;
@@ -64,7 +64,7 @@
             background-color: #28947a;
             color: white;
         }
-        .btn-bk{
+        .btn-bk1{
             display: block;
             width: 120px;
         }
@@ -73,6 +73,13 @@
         }
         img{
             height: 50px;
+        }
+        #footer{
+            background-color: #fcf8e3;
+        }
+        .btn-bk2{
+            display: block;
+            width: 220px;
         }
 
     </style>
@@ -110,11 +117,16 @@
                             <fieldset>
                                 <legend class="ml-2">{{ lesson.user.name }}</legend>
                                 <textarea name="" id="" cols="45" rows="5" class="mx-2"></textarea>
-                                <input type="submit" class="btn btn-color btn-bk font-weight-bold mx-auto mb-2">
+                                <input type="submit" class="btn btn-color btn-bk1 font-weight-bold mx-auto mb-2">
                             </fieldset>
                         </form>
                     </div>
                 </div>
+            </div>
+            <div id="footer">
+                <div class="row flex-row">
+                    <a href=""class="btn btn-color btn-bk font-weight-bold mx-auto my-2">Looks great! I'm finished.</a>
+                    <a href="/revise_solo" class="btn btn-color btn-bk2 font-weight-bold mx-auto my-2">I want to make changes. Go back.</a>
             </div>
         </div>
     </div>
