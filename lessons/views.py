@@ -82,7 +82,6 @@ def teacher_choice_solo(request):
     if 'user_id' in request.session:
 
         if request.method == "POST":
-
             # render new lesson screen
             if request.POST['action'] == "modify":
                 context = {
@@ -97,6 +96,17 @@ def teacher_choice_solo(request):
             # redirect to display lesson code for students
             elif request.POST['action'] == "code":
                 lesson_id = request.POST['lesson']
+
+                # make sure lesson settings are updated for teacher's request
+                this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+                if request.POST['parts'] == "part_1":
+                    this_lesson.like_same_day = False
+                    this_lesson.save()
+
+                else:
+                    this_lesson.like_same_day = True
+                    this_lesson.save()
+
                 print("The lesson id is", lesson_id)
                 return redirect(f'post_code/{lesson_id}')
 
@@ -109,6 +119,9 @@ def teacher_choice_solo(request):
 
     else:
         return redirect('/login/')
+
+def update_options(request):
+    return render(request, 'today_option.html')
 
 
 # Creating/Revising Lessons
@@ -251,7 +264,9 @@ def revise_solo(request):
 def success(request):
     if 'user_id' in request.session:
         lesson = Solo_Lesson.objects.last()
-        lesson.lesson_code = get_random_string(length=10)
+        # I wonder if I should check the database to make
+        # sure there are no duplicates??
+        lesson.lesson_code = get_random_string(length=6)
         lesson.save()
 
         context = {
@@ -291,10 +306,28 @@ def get_lesson(request):
 
 def get_solo_lesson(request, lesson_id):
     if 'user_id' in request.session:
+
+        # Check to see if student already posted on this lesson
+        this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+        this_user = User.objects.get(id=request.session['user_id'])
+        all_posts_this_lesson = Post.objects.filter(solo_lesson=this_lesson)
+
         context = {
-            'lesson': Solo_Lesson.objects.get(id=lesson_id)
+            'lesson': this_lesson,
+            'user': this_user,
+            'posts': Post.objects.filter(solo_lesson=this_lesson)
         }
-        return render(request, 'student_solo.html', context)
+        this_users_posts = Post.objects.filter(user=this_user)
+        this_users_posts2 = all_posts_this_lesson.filter(user=this_user)
+
+        print("first", this_lesson.posts.values())
+        print("second", this_users_posts2.values())
+
+        if this_users_posts:
+            if this_users_posts[0].content != '':
+                return render(request, 'notice_class.html', context)
+        else:
+            return render(request, 'student_solo.html', context)
     return redirect('/')
 
 def student_posted(request, lesson_id):
@@ -308,7 +341,14 @@ def student_posted(request, lesson_id):
             solo_lesson = this_lesson
         )
         # send student somewhere
-        return redirect('/thank_you')
+        if this_lesson.like_same_day == False:
+            return redirect('/thank_you')
+        else:
+            context = {
+                'lesson': this_lesson,
+                'user': this_user
+            }
+            return render(request, 'notice_class.html', context)
     return redirect('/')
 
 def thank_you(request):

@@ -17,6 +17,7 @@ urlpatterns = [
     path('success', views.success),
     path('post_code/<int:lesson_id>', views.post_code),
     path('get_lesson', views.get_lesson),
+    path('update_options', views.update_options),
     path('student_solo/<int:lesson_id>', views.get_solo_lesson),
     path('student_posted/<int:lesson_id>', views.student_posted),
     path('thank_you', views.thank_you),
