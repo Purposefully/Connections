@@ -25,22 +25,26 @@
             display: block;
             width: 130px;
         }
+        img{
+            width: 200px;
+        }
     </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center">
         <!-- <div class="flex-col"></div> -->
         <div class="card card-color">
-            <div class="card-header row">
-                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+            <div class="card-header row flex-column">
                 <h1 class="text-center">Thank you!</h1>
+                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together" class="mx-auto">
+                
             </div>
             <div class="card-body text-center">
                 <h2>Go on to the next task on your list.</h2>
                 <h2>Have a fantastic day!</h2>
             </div>
             <div class="card-footer">
-                <button class="btn btn-color btn-bk mx-auto font-weight-bold">Logout</button>
+                <a href="/logout" class="btn btn-color btn-bk mx-auto font-weight-bold">Logout</a>
             </div>
 
 

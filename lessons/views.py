@@ -105,12 +105,13 @@ def teacher_choice_solo(request):
             context = {
                 'lessons': User.objects.get(id=request.session['user_id']).solo_lessons.all()
             }
-            lessons = User.objects.get(id=request.session['user_id']).solo_lessons.all()
-            print(lessons[0].title)
             return render(request, 'new_lesson_solo.html', context)
 
     else:
         return redirect('/login/')
+
+
+# Creating/Revising Lessons
 
 def new_lesson(request):
     if 'user_id' in request.session:
@@ -264,3 +265,51 @@ def post_code(request, lesson_id):
             'lesson': Solo_Lesson.objects.get(id=lesson_id)
         }
         return render(request, 'code.html', context)
+
+# Student Actions
+
+def get_lesson(request):
+    if 'user_id' in request.session:
+        # check for valid code
+        # check whether code in single or double lesson DB
+        # return redirect with lesson id number to proper page
+        if request.method == "POST":
+            lessons = Solo_Lesson.objects.filter(lesson_code = request.POST['code'])
+            if lessons:
+                if lessons[0].lesson_code != '':
+                    this_lesson = lessons[0]
+                    return redirect(f'/student_solo/{this_lesson.id}')
+            elif (False):
+                #check double lesson DB
+                pass
+            else:
+                print("makes it here")
+                messages.error(request, "Please check you typed that code correctly...")
+                print(messages)
+
+        return redirect('/student_dashboard')
+
+def get_solo_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        context = {
+            'lesson': Solo_Lesson.objects.get(id=lesson_id)
+        }
+        return render(request, 'student_solo.html', context)
+    return redirect('/')
+
+def student_posted(request, lesson_id):
+    if 'user_id' in request.session:
+        # save post to the database
+        this_user = User.objects.get(id=request.session['user_id'])
+        this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+        Post.objects.create(
+            content = request.POST['content'],
+            user = this_user,
+            solo_lesson = this_lesson
+        )
+        # send student somewhere
+        return redirect('/thank_you')
+    return redirect('/')
+
+def thank_you(request):
+    return render(request, 'thank_you.html')

@@ -83,15 +83,15 @@
                 <div class="row flex-row">
                     <div class="col">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{% lesson.image %" alt="">
+                            <img src="{{ lesson.image.url }}" alt="">
                         </div>
                     </div>
                     <div class="col">
                         <div id="title" class="mt-2">
-                            <h1>{% lesson.heading %}</h1>
+                            <h1>{{ lesson.heading }}</h1>
                         </div>
                         <div id="directions">
-                            <p>{% lesson.content %}</p>
+                            <p>{{ lesson.content }}</p>
                         </div>
                     </div>
                 </div>
@@ -104,11 +104,11 @@
                 </div>
                 <div class="row hdr-ht">
                     <div id="student-response" class="px-3 pb-3 rounded">
-                        <form action="">
+                        <form action="/student_posted/{{lesson.id}}" method="POST">
                             {% csrf_token %}
                             <fieldset>
-                                <legend class="ml-2">{% user.name %}</legend>
-                                <textarea name="" id="" cols="45" rows="5" class="mx-2"></textarea>
+                                <legend class="ml-2">{{ lesson.user.name }}</legend>
+                                <textarea name="content" id="" cols="45" rows="5" class="mx-2"></textarea>
                                 <input type="submit" class="btn btn-color btn-bk font-weight-bold mx-auto mb-2">
                             </fieldset>
                         </form>

@@ -42,3 +42,10 @@ class Solo_Lesson(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Post(models.Model):
+    content = models.TextField()
+    number_likes = models.IntegerField(default=0)
+    user = models.ForeignKey(User, related_name="posts", on_delete = models.CASCADE)
+    solo_lesson = models.ForeignKey(Solo_Lesson, related_name="posts", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
