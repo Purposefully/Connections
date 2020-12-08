@@ -25,6 +25,9 @@
             display: block;
             width: 130px;
         }
+        img{
+            height: 50px;
+        }
     </style>
 </head>
 <body>
@@ -37,11 +40,11 @@
             <div class="card-body text-center">
                 <h2>Your lesson has been created.</h2>
                 <h3>Here's a link you can share with your students:</h3>
-                <a href="{% lesson.link %">Lesson</a>
+                <a href="/solo_open_lesson/{{lesson.code}}">Lesson</a>
             </div>
             <div class="card-footer">
-                <button class="btn btn-color btn-bk2 mx-auto font-weight-bold">Duplicate this lesson for another class</button>
-                <button class="btn btn-color btn-bk3 mx-auto font-weight-bold">Create a new lesson</button>
+                <a href="/revise_solo" class="btn btn-color btn-bk2 mx-auto font-weight-bold">Duplicate this lesson for another class</a>
+                <a href="/teacher_choice" class="btn btn-color btn-bk3 mx-auto font-weight-bold">Create a new lesson</a>
                 <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
             </div>
 

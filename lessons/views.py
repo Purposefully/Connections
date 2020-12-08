@@ -4,6 +4,7 @@ from .forms import *
 from django.contrib import messages
 from .models import *
 import bcrypt
+from django.utils.crypto import get_random_string
 
 # Home page
 def index(request):
@@ -71,33 +72,42 @@ def student_dashboard(request):
     else:
         return redirect('/login/')
 
-def teacher_dashboard(request):
+def single_or_double(request):
     if 'user_id' in request.session:
-        return render(request, 'teacher_dashboard.html')
+        return render(request, 'single_or_double.html')
     else:
         return redirect('/login/')
 
-def teacher_choice(request):
+def teacher_choice_solo(request):
     if 'user_id' in request.session:
 
-        # if user landed here via teacher dashboard form:
         if request.method == "POST":
 
             # render new lesson screen
-            if request.POST['teacher_options'] == "new_lesson":
-                return render(request, 'new_lesson.html')
+            if request.POST['action'] == "modify":
+                context = {
+                    'lesson': Solo_Lesson.objects.get(id=request.POST['lesson'])
+                }
+                return render(request, 'revise_solo.html', context)
 
             # redirect to view student work on a lesson
-            elif request.POST['teacher_options'] == "student_work":
-                return redirect(request, f'lesson/{request.POST.lesson_id}.html')
+            elif request.POST['action'] == "student_work":
+                return redirect(f'lesson/{request.POST.lesson_id}.html')
 
             # redirect to display lesson code for students
-            elif request.POST['teacher_options'] == "post_code":
-                return redirect(request, f'lesson/{request.POST.lesson_id}.html')
+            elif request.POST['action'] == "code":
+                lesson_id = request.POST['lesson']
+                print("The lesson id is", lesson_id)
+                return redirect(f'post_code/{lesson_id}')
 
-        # if user clicked "previous screen" on new lesson page:
+        # if user clicked "previous screen" on new lesson page or got here from 
         else:
-            return render(request, 'new_lesson.html')
+            context = {
+                'lessons': User.objects.get(id=request.session['user_id']).solo_lessons.all()
+            }
+            lessons = User.objects.get(id=request.session['user_id']).solo_lessons.all()
+            print(lessons[0].title)
+            return render(request, 'new_lesson_solo.html', context)
 
     else:
         return redirect('/login/')
@@ -105,11 +115,10 @@ def teacher_choice(request):
 def new_lesson(request):
     if 'user_id' in request.session:
 
-        if request.GET['lesson_type'] == "open":
-            context = {
-                'img_form': ImageForm(),
-            }
-            return render(request, 'notice_solo.html', context)
+        context = {
+            'img_form': ImageForm(),
+        }
+        return render(request, 'notice_solo.html', context)
 
 def insert_image(request):
     if 'user_id' in request.session:
@@ -217,23 +226,41 @@ def preview_solo_lesson(request, lesson_id):
         return render(request, 'solo_preview.html', context)
 
 def revise_solo(request):
-        if 'user_id' in request.session:
-            lesson = Solo_Lesson.objects.last()
-            likes = justification = same_day = False
-            if lesson.likes_allowed == True:
-                likes = "checked"
+    if 'user_id' in request.session:
+        lesson = Solo_Lesson.objects.last()
+        likes = justification = same_day = False
+        if lesson.likes_allowed == True:
+            likes = "checked"
 
-            if lesson.justification_required == True:
-                justification = "checked"
+        if lesson.justification_required == True:
+            justification = "checked"
 
-            if lesson.like_same_day == True:
-                same_day = "checked"
-            print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day)
-            print(likes, justification, same_day)
-            context = {
-                'info': Solo_Lesson.objects.last(),
-                'likes': likes,
-                'justification': justification,
-                'same_day': same_day
-            }
-        return render(request, 'revise_solo.html', context)
+        if lesson.like_same_day == True:
+            same_day = "checked"
+        print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day)
+        print(likes, justification, same_day)
+        context = {
+            'info': Solo_Lesson.objects.last(),
+            'likes': likes,
+            'justification': justification,
+            'same_day': same_day
+        }
+    return render(request, 'revise_solo.html', context)
+
+def success(request):
+    if 'user_id' in request.session:
+        lesson = Solo_Lesson.objects.last()
+        lesson.lesson_code = get_random_string(length=10)
+        lesson.save()
+
+        context = {
+            'lesson': lesson
+        }
+        return render(request, 'success.html', context)
+
+def post_code(request, lesson_id):
+    if 'user_id' in request.session:
+        context = {
+            'lesson': Solo_Lesson.objects.get(id=lesson_id)
+        }
+        return render(request, 'code.html', context)

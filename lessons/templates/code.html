@@ -25,6 +25,9 @@
             display: block;
             width: 130px;
         }
+        img{
+            width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
                 <h1 class="text-center">Here's today's code:</h1>
             </div>
             <div class="card-body text-center">
-                <h2>{% lesson.code %}</h2>
+                    <h2>{{ lesson.lesson_code }}</h2>
                 <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
             </div>
             <div class="card-footer">

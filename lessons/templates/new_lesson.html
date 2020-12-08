@@ -47,16 +47,14 @@
         <div class="flex-col">
             <div class="row justify-content-center">
                 <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
-                <h1 class="text-center">Lesson Set-Up</h1>
+                <h1 class="text-center">What do you want to do?</h1>
             </div>
         <div class="card">
             <div class="card-body">
-
+                <a href="/new_lesson" class="btn btn-color font-weight-bold" >Create a new lesson!</a>
                 <!-- Will this work or do I have to handle it server side? -->
                 <!-- I don't know if it can pull the lesson.id or not -->
                 <form action="/lesson/{{lesson.id}}" method="GET">
-
-
                     <!-- {% csrf_token %} -->
                     <div class="form-inline">
                         <label for="select_lesson" class="h4 mr-2">Select an existing lesson:</label>
@@ -80,51 +78,54 @@
                         <hr class="round ml-0 my-auto">
                     </div>
                 </div>
-                <h4 class="text-center">Create your own lesson:</h4>
+                <h4 class="text-center">Use an existing lesson:</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text center">Select a lesson</h5>
+                        <form action="/new_lesson/connect" method="GET">
+                            <!-- {% csrf_token %} -->
+                            <label for="lessons">Select a lesson <a href=""></a> lessons</label>
+                            <select class="custom-select" id="lessons" multiple>
+                                <option value="" aria-describedby="multiple_help" selected>Choose 2</option>
+                                {% for lesson in lessons %}
+                                <option value="{{lesson.id}}">{{lesson.id}}</option>
+                                {% endfor %}
+                            </select>
+                            <small id="multiple_help" class="form-text text-muted">Hold down the Control or Command button while selecting two lessons.</small>
+                            <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Create and Preview">
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card-deck">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title text center">Lesson with Single Image</h5>
-
-                            <!-- Will this work or do I have to handle 
-                            lesson type on server side? -->
+                            <h5 class="card-title text center">Action Desired</h5>
                             <form action="/new_lesson" method="GET">
 
                                 <!-- {% csrf_token %} -->
                                 <p>Select type of student response desired:</p>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="lesson_type" value="open" id="open" checked>
-                                    <label for="open" class="form-check-label">Open-ended response</label>
+                                    <input type="radio" class="form-check-input" name="action" value="modify" id="modify" checked>
+                                    <label for="modify" class="form-check-label">Modify</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="lesson_type" value="list" id="list">
-                                    <label for="list" class="form-check-label">List</label>
+                                    <input type="radio" class="form-check-input" name="action" value="code" id="code">
+                                    <label for="code" class="form-check-label">Post the code for my class</label>
                                 </div>
-                                <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Create and Preview">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="action" value="student_work" id="student_work">
+                                    <label for="student_work" class="form-check-label">View Student Work</label>
+                                </div>
+                                <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Go!">
                             </form>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text center">Connect 2 Images</h5>
-                            <form action="/new_lesson/connect" method="GET">
-                                <!-- {% csrf_token %} -->
-                                <label for="lessons">Select 2 lessons</label>
-                                <select class="custom-select" id="lessons" multiple>
-                                    <option value="" aria-describedby="multiple_help" selected>Choose 2</option>
-                                    {% for lesson in lessons %}
-                                    <option value="{{lesson.id}}">{{lesson.id}}</option>
-                                    {% endfor %}
-                                </select>
-                                <small id="multiple_help" class="form-text text-muted">Hold down the Control or Command button while selecting two lessons.</small>
-                                <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Create and Preview">
-                            </form>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="card-footer btn-color">
-                <a href="/teacher_dashboard">Changed my mind! Return to Teacher Dashboard, please.</a>
+                <a href="/single_or_double">Changed my mind! Return to Teacher Dashboard, please.</a>
             </div>
         </div>
     </div>
