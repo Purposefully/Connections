@@ -115,7 +115,7 @@
                     <div class="modal fade" id="justify" tabindex="-1" role="dialog" aria-labelledby="modalJustification" area-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form action="" class="needs-validation">
+                                <form action="/add_like/{{post.id}}" method="POST" class="needs-validation">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modalJustification">This makes me think...</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -135,6 +135,9 @@
 
                 </div>
             </div>
+            <div class="opt-solid py-3">
+                <a href="/thank_you" class="btn btn-color btn-bk2 mx-auto font-weight-bold">I am finished selecting the best ideas!</a>
+            </div>
         </div>
     </div>
 
@@ -153,6 +156,27 @@
             return false;
         })
 
+        $(document).on("change", 'form input:submit', function(e){
+            e.preventDefault()
+            $.ajax({
+                url: 'add_like',
+                method: 'POST',
+                data: $(this).serialize(),
+                beforeSend: function(){
+                    alert("Before send");
+                },
+                success: function(serverResponse){
+                    console.log("this is the server's response", serverResponse)
+                    // return context with success so I can get the likes for the images?
+                    // $('#insert-here').html(serverResponse)
+                },
+                error: function(){
+                    alert("failed");
+                    console.log(data)
+                }
+            })
+            $(this).trigger('reset')
+        })
     </script>
 </body>
 </html>

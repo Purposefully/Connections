@@ -51,8 +51,24 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Like(models.Model):
-    justification = text()
+    justification = models.TextField()
     user = models.ForeignKey(User, related_name="likes", on_delete = models.CASCADE)
     post = models.ForeignKey(Post, related_name="likes", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Connect_Lesson(models.Model):
+    title = models.CharField(max_length=45)
+    heading = models.CharField(max_length=45, default="How are these connected?")
+    content = models.TextField(default="Share at least one conjecture about how these representations are related.")
+    likes_allowed = models.BooleanField(default=False)
+    max_likes = models.IntegerField(default=0)
+    justification_required = models.BooleanField(default=False)
+    justification_text = models.TextField(default='I think this observation is significant because...')
+    like_same_day = models.BooleanField(default=False)
+    lesson_code = models.CharField(max_length=10)
+    user = models.ForeignKey(User, related_name="solo_lessons", on_delete = models.CASCADE)
+    lesson1 = models.ForeignKey(Solo_Lesson, related_name="connect_lessons", on_delete = models.CASCADE)
+    lesson2 = models.ForeignKey(Solo_Lesson, related_name="connect_lessons", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

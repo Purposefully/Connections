@@ -124,8 +124,48 @@ def teacher_choice_solo(request):
 def update_options(request):
     return render(request, 'today_option.html')
 
+def teacher_choice_double(request):
+    if 'user_id' in request.session:
+
+        if request.method == "POST":
+            # render new lesson screen
+            if request.POST['action'] == "modify":
+                context = {
+                    'lesson': Solo_Lesson.objects.get(id=request.POST['lesson'])
+                }
+                return render(request, 'revise_solo.html', context)
+
+            # redirect to view student work on a lesson
+            elif request.POST['action'] == "student_work":
+                lesson_id = request.POST['lesson']
+                return redirect(f'student_work_solo/{lesson_id}')
+
+            # redirect to display lesson code for students
+            elif request.POST['action'] == "code":
+                lesson_id = request.POST['lesson']
+
+                # make sure lesson settings are updated for teacher's request
+                this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+                if request.POST['parts'] == "part_1":
+                    this_lesson.like_same_day = False
+                    this_lesson.save()
+
+                else:
+                    this_lesson.like_same_day = True
+                    this_lesson.save()
+
+                print("The lesson id is", lesson_id)
+                return redirect(f'post_code/{lesson_id}')
+
+        # if user got here from elsewhere
+        else:
+            context = {
+                'lessons': User.objects.get(id=request.session['user_id']).connect_lessons.all()
+            }
+            return render(request, 'new_connect_lesson.html', context)
 
 # Creating/Revising Lessons
+# Single Image Lessons
 
 def new_lesson(request):
     if 'user_id' in request.session:
@@ -293,6 +333,60 @@ def student_work(request, lesson_id):
         }
         return render(request, 'student_work_solo.html', context)
 
+# Creating/Revising Lessons
+# Connect 2 Images Lessons
+
+def new_lesson_connect(request):
+    if 'user_id' in request.session:
+        print(request.POST['lessons'])
+        # don't know how the values are returned -- an array?
+        context = {
+            'lesson1': Solo_Lesson.objects.get(id=request.POST[]),
+            'lesson2': Solo_Lesson.objects.get(id=request.POST[])
+        }
+        return render(request, 'notice_connect.html', context)
+
+def create_connect_lesson(request):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            print(request.POST)
+
+            if 'likes_allowed' in request.POST:
+                if request.POST['likes_allowed'] == 'on':
+                    likes_allowed = True
+                else:
+                    likes_allowed = False
+
+            if 'justification_required' in request.POST:
+                    if request.POST['justification_required'] == 'on':
+                        justification_required = True
+                    else:
+                        justification_required = False
+
+            if 'like_same_day' in request.POST:
+                    if request.POST['like_same_day'] == 'on':
+                        like_same_day = True
+                    else:
+                        like_same_day= False
+
+            this_lesson = Connect_Lesson.objects.create(
+                title = request.POST['title'],
+                heading = request.POST['heading'],
+                content = request.POST['content'],
+                likes_allowed = likes_allowed,
+                max_likes = request.POST['number_likes']
+                justification_required = justification_required,
+                justification_text = request.POST['prompt']
+                like_same_day = like_same_day,
+                lesson_code = get_random_string(length=6),
+                user = User.objects.get(id=request.session['user_id']),
+                lesson1 = Solo_Lesson.objects.get(id=request.POST['lesson1']),
+                lesson2 = Solo_Lesson.objects.get(id=request.POST['lesson2'])
+            )
+
+            return redirect(f"/preview_connect_lesson/{this_lesson.id}")
+
+    return redirect(request, '/login/')
 
 # Student Actions
 
@@ -361,6 +455,23 @@ def student_posted(request, lesson_id):
             }
             return render(request, 'notice_class.html', context)
     return redirect('/')
+
+def add_like(request, post_id):
+    if 'user_id' in request.session:
+
+        # Create like
+        this_user = User.objects.get(id=request.session['user_id'])
+        this_post = Post.objects.get(id=post_id)
+        Like.objects.create(
+            justification = request.POST['justification'],
+            user = this_user,
+            post = this_post
+        )
+        context = {
+            'lesson': this_lesson,
+            'user': this_user
+        }
+        return render(request, 'update_post.html', context)
 
 def thank_you(request):
     return render(request, 'thank_you.html')
