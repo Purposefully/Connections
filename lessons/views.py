@@ -91,7 +91,8 @@ def teacher_choice_solo(request):
 
             # redirect to view student work on a lesson
             elif request.POST['action'] == "student_work":
-                return redirect(f'lesson/{request.POST.lesson_id}.html')
+                lesson_id = request.POST['lesson']
+                return redirect(f'student_work_solo/{lesson_id}')
 
             # redirect to display lesson code for students
             elif request.POST['action'] == "code":
@@ -281,6 +282,18 @@ def post_code(request, lesson_id):
         }
         return render(request, 'code.html', context)
 
+def student_work(request, lesson_id):
+    if 'user_id' in request.session:
+        this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+        posts = Post.objects.filter(solo_lesson=this_lesson)
+
+        context = {
+            'lesson': this_lesson,
+            'posts': posts
+        }
+        return render(request, 'student_work_solo.html', context)
+
+
 # Student Actions
 
 def get_lesson(request):
@@ -307,21 +320,19 @@ def get_lesson(request):
 def get_solo_lesson(request, lesson_id):
     if 'user_id' in request.session:
 
-        # Check to see if student already posted on this lesson
         this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+        posts = Post.objects.filter(solo_lesson=this_lesson)
         this_user = User.objects.get(id=request.session['user_id'])
-        all_posts_this_lesson = Post.objects.filter(solo_lesson=this_lesson)
 
         context = {
             'lesson': this_lesson,
-            'user': this_user,
-            'posts': Post.objects.filter(solo_lesson=this_lesson)
+            'posts': posts,
+            'user': this_user
         }
-        this_users_posts = Post.objects.filter(user=this_user)
-        this_users_posts2 = all_posts_this_lesson.filter(user=this_user)
 
-        print("first", this_lesson.posts.values())
-        print("second", this_users_posts2.values())
+        # Check to see if student already posted on this lesson
+
+        this_users_posts = Post.objects.filter(user=this_user,solo_lesson=lesson_id)
 
         if this_users_posts:
             if this_users_posts[0].content != '':

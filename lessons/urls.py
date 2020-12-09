@@ -20,6 +20,7 @@ urlpatterns = [
     path('update_options', views.update_options),
     path('student_solo/<int:lesson_id>', views.get_solo_lesson),
     path('student_posted/<int:lesson_id>', views.student_posted),
+    path('student_work_solo/<int:lesson_id>', views.student_work),
     path('thank_you', views.thank_you),
     path('logout', views.logout)
 ]
