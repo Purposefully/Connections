@@ -71,3 +71,11 @@ class Connect_Lesson(models.Model):
     lessons = models.ManyToManyField(Solo_Lesson, related_name="connect_lessons")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class ConnectPost(models.Model):
+    content = models.TextField()
+    number_likes = models.IntegerField(default=0)
+    user = models.ForeignKey(User, related_name="connect_posts", on_delete = models.CASCADE)
+    connect_lesson = models.ForeignKey(Connect_Lesson, related_name="connect_posts", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

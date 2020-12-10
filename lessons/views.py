@@ -97,6 +97,7 @@ def teacher_choice_solo(request):
             # redirect to display lesson code for students
             elif request.POST['action'] == "code":
                 lesson_id = request.POST['lesson']
+                request.session['type'] = 'single'
 
                 # make sure lesson settings are updated for teacher's request
                 this_lesson = Solo_Lesson.objects.get(id=lesson_id)
@@ -128,6 +129,8 @@ def teacher_choice_double(request):
     if 'user_id' in request.session:
 
         if request.method == "POST":
+
+            print(request.POST)
             # render new lesson screen
             if request.POST['action'] == "modify":
                 context = {
@@ -143,9 +146,10 @@ def teacher_choice_double(request):
             # redirect to display lesson code for students
             elif request.POST['action'] == "code":
                 lesson_id = request.POST['lesson']
+                request.session['type'] = 'connect'
 
                 # make sure lesson settings are updated for teacher's request
-                this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+                this_lesson = Connect_Lesson.objects.get(id=lesson_id)
                 if request.POST['parts'] == "part_1":
                     this_lesson.like_same_day = False
                     this_lesson.save()
@@ -318,9 +322,16 @@ def success(request):
 
 def post_code(request, lesson_id):
     if 'user_id' in request.session:
-        context = {
-            'lesson': Solo_Lesson.objects.get(id=lesson_id)
-        }
+        if request.session['type'] == "connect":
+            print("in the connect lessons")
+            context = {
+                'lesson': Connect_Lesson.objects.get(id=lesson_id)
+            }
+        else:
+            print("in the solo lessons")
+            context = {
+                'lesson': Solo_Lesson.objects.get(id=lesson_id)
+            }
         return render(request, 'code.html', context)
 
 def student_work(request, lesson_id):
@@ -436,13 +447,16 @@ def get_lesson(request):
         # return redirect with lesson id number to proper page
         if request.method == "POST":
             lessons = Solo_Lesson.objects.filter(lesson_code = request.POST['code'])
+            lessons2 = Connect_Lesson.objects.filter(lesson_code = request.POST['code'])
             if lessons:
                 if lessons[0].lesson_code != '':
                     this_lesson = lessons[0]
                     return redirect(f'/student_solo/{this_lesson.id}')
-            elif (False):
-                #check double lesson DB
-                pass
+            elif lessons2 :
+                if lessons2:
+                    if lessons2[0].lesson_code != '':
+                        this_lesson = lessons2[0]
+                    return redirect(f'/student_solo/{this_lesson.id}')
             else:
                 print("makes it here")
                 messages.error(request, "Please check you typed that code correctly...")
@@ -490,6 +504,7 @@ def student_posted(request, lesson_id):
         else:
             context = {
                 'lesson': this_lesson,
+                'posts': Post.objects.filter(solo_lesson=this_lesson),
                 'user': this_user
             }
             return render(request, 'notice_class.html', context)
@@ -511,6 +526,65 @@ def add_like(request, post_id):
             'user': this_user
         }
         return render(request, 'update_post.html', context)
+
+def get_connect_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+
+        this_connect_lesson = Connect_Lesson.objects.get(id=lesson_id)
+        single_lessons = this_connect_lesson.lessons.all()
+        print(single_lessons[0])
+        print(single_lessons[1])
+
+        connect_posts = ConnectPost.objects.filter(connect_lesson=this_connect_lesson)
+        this_user = User.objects.get(id=request.session['user_id'])
+
+        context = {
+            'lesson': this_connect_lesson,
+            'solo_lesson1':single_lessons[0],
+            'posts1': Post.objects.filter(solo_lesson=single_lessons[0]),
+            'solo_lesson2': single_lessons[1],
+            'posts2': Post.objects.filter(solo_lesson=single_lessons[1]),
+            'connect_posts': connect_posts,
+            'user': this_user
+        }
+
+        # Check to see if student already posted on this lesson
+
+        this_users_posts = ConnectPost.objects.filter(user=this_user,connect_lesson=lesson_id)
+
+        if this_users_posts:
+            if this_users_posts[0].content != '':
+                return render(request, 'class_connect.html', context)
+        else:
+            return render(request, 'student_connect.html', context)
+    return redirect('/')
+
+def student_posted_connect(request, lesson_id):
+    if 'user_id' in request.session:
+        # save post to the database
+        this_user = User.objects.get(id=request.session['user_id'])
+        this_lesson = Connect_Lesson.objects.get(id=lesson_id)
+        ConnectPost.objects.create(
+            content = request.POST['content'],
+            user = this_user,
+            connect_lesson = this_lesson
+        )
+        # send student somewhere
+        if this_lesson.like_same_day == False:
+            return redirect('/thank_you')
+        else:
+            single_lessons = this_lesson.lessons.all()
+            context = {
+                'lesson': this_lesson,
+                'solo_lesson1':single_lessons[0],
+                'posts1': Post.objects.filter(solo_lesson=single_lessons[0]),
+                'solo_lesson2': single_lessons[1],
+                'posts2': Post.objects.filter(solo_lesson=single_lessons[1]),
+                'connect_posts': ConnectPost.objects.filter(connect_lesson=this_lesson),
+                'user': this_user
+            }
+            return render(request, 'connect_class.html', context)
+    return redirect('/')
 
 def thank_you(request):
     return render(request, 'thank_you.html')

@@ -20,6 +20,8 @@ urlpatterns = [
     path('create_connect_lesson', views.create_connect_lesson),
     path('preview_connect_lesson/<int:lesson_id>', views.preview_connect_lesson),
     path('connect_success', views.connect_success),
+    path('student_connect/<int:lesson_id>', views.get_connect_lesson),
+    path('student_posted_connect/<int:lesson_id>', views.student_posted_connect),
     path('post_code/<int:lesson_id>', views.post_code),
     path('get_lesson', views.get_lesson),
     path('update_options', views.update_options),
