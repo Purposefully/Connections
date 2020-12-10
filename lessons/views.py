@@ -160,7 +160,8 @@ def teacher_choice_double(request):
         # if user got here from elsewhere
         else:
             context = {
-                'lessons': User.objects.get(id=request.session['user_id']).connect_lessons.all()
+                'solo_lessons': User.objects.get(id=request.session['user_id']).solo_lessons.all(),
+                'connect_lessons': User.objects.get(id=request.session['user_id']).connect_lessons.all()
             }
             return render(request, 'new_connect_lesson.html', context)
 
@@ -247,20 +248,20 @@ def update_settings(request):
             if 'likes_allowed' in request.POST:
                 if request.POST['likes_allowed'] == 'on':
                     this_lesson.likes_allowed = True
-                else:
-                    this_lesson.likes_allowed = False
+            else:
+                this_lesson.likes_allowed = False
 
             if 'justification_required' in request.POST:
-                    if request.POST['justification_required'] == 'on':
-                        this_lesson.justification_required = True
-                    else:
-                        this_lesson.justification_required = False
+                if request.POST['justification_required'] == 'on':
+                    this_lesson.justification_required = True
+            else:
+                this_lesson.justification_required = False
 
             if 'like_same_day' in request.POST:
-                    if request.POST['like_same_day'] == 'on':
-                        this_lesson.like_same_day = True
-                    else:
-                        this_lesson.like_same_day= False
+                if request.POST['like_same_day'] == 'on':
+                    this_lesson.like_same_day = True
+            else:
+                this_lesson.like_same_day= False
 
             this_lesson.max_likes = request.POST['number_likes']
             this_lesson.justification_text = request.POST['prompt']
@@ -338,13 +339,21 @@ def student_work(request, lesson_id):
 
 def new_lesson_connect(request):
     if 'user_id' in request.session:
-        print(request.POST['lessons'])
-        # don't know how the values are returned -- an array?
-        context = {
-            'lesson1': Solo_Lesson.objects.get(id=request.POST[]),
-            'lesson2': Solo_Lesson.objects.get(id=request.POST[])
-        }
-        return render(request, 'notice_connect.html', context)
+        if request.method == "POST":
+            # returns lesson ids in an array
+            # to see it:
+            # print(request.POST.getlist('lessons'))
+            lessons = request.POST.getlist('lessons')
+
+            lesson1 = Solo_Lesson.objects.get(id=lessons[0])
+            lesson2 = Solo_Lesson.objects.get(id=lessons[1])
+            context = {
+                'lesson1':lesson1,
+                'posts1': Post.objects.filter(solo_lesson=lesson1),
+                'lesson2': lesson2,
+                'posts2': Post.objects.filter(solo_lesson=lesson2),
+            }
+            return render(request, 'notice_connect.html', context)
 
 def create_connect_lesson(request):
     if 'user_id' in request.session:
@@ -354,40 +363,70 @@ def create_connect_lesson(request):
             if 'likes_allowed' in request.POST:
                 if request.POST['likes_allowed'] == 'on':
                     likes_allowed = True
-                else:
-                    likes_allowed = False
+            else:
+                likes_allowed = False
 
             if 'justification_required' in request.POST:
-                    if request.POST['justification_required'] == 'on':
-                        justification_required = True
-                    else:
-                        justification_required = False
+                if request.POST['justification_required'] == 'on':
+                    justification_required = True
+            else:
+                justification_required = False
 
             if 'like_same_day' in request.POST:
-                    if request.POST['like_same_day'] == 'on':
-                        like_same_day = True
-                    else:
-                        like_same_day= False
+                if request.POST['like_same_day'] == 'on':
+                    like_same_day = True
+            else:
+                like_same_day= False
 
             this_lesson = Connect_Lesson.objects.create(
                 title = request.POST['title'],
                 heading = request.POST['heading'],
                 content = request.POST['content'],
                 likes_allowed = likes_allowed,
-                max_likes = request.POST['number_likes']
+                max_likes = request.POST['number_likes'],
                 justification_required = justification_required,
-                justification_text = request.POST['prompt']
+                justification_text = request.POST['prompt'],
                 like_same_day = like_same_day,
                 lesson_code = get_random_string(length=6),
                 user = User.objects.get(id=request.session['user_id']),
-                lesson1 = Solo_Lesson.objects.get(id=request.POST['lesson1']),
-                lesson2 = Solo_Lesson.objects.get(id=request.POST['lesson2'])
             )
+
+            lesson1 = Solo_Lesson.objects.get(id=request.POST['lesson1'])
+            this_lesson.lessons.add(lesson1)
+            lesson2 = Solo_Lesson.objects.get(id=request.POST['lesson2'])
+            this_lesson.lessons.add(lesson2)
 
             return redirect(f"/preview_connect_lesson/{this_lesson.id}")
 
     return redirect(request, '/login/')
 
+def preview_connect_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        # lesson = Connect_Lesson.objects.get(id=lesson_id)
+        # print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day)
+
+        this_connect_lesson = Connect_Lesson.objects.get(id=lesson_id)
+        single_lessons = this_connect_lesson.lessons.all()
+        print(single_lessons[0])
+        print(single_lessons[1])
+
+        context = {
+            'connect_lesson': this_connect_lesson,
+            'solo_lesson1':single_lessons[0],
+            'posts1': Post.objects.filter(solo_lesson=single_lessons[0]),
+            'solo_lesson2': single_lessons[1],
+            'posts2': Post.objects.filter(solo_lesson=single_lessons[1]),
+        }
+
+        return render(request, 'connect_preview.html', context)
+
+def connect_success(request):
+    if 'user_id' in request.session:
+
+        context = {
+            'lesson': Connect_Lesson.objects.last()
+        }
+        return render(request, 'connect_success.html', context)
 # Student Actions
 
 def get_lesson(request):
