@@ -107,7 +107,6 @@
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
                                 <input type="text" name="heading" class="h1 mr-5" value="What do you notice?">
                                 <p class="helper"><em>(Feel free to edit the title.)</em></p>
-                                <input type="submit">
                             </form>
                         </div>
                         <div>
@@ -116,7 +115,6 @@
                                 <input type="hidden" name="solo_lesson_id" value="{{info.id}}">
                                 <textarea name="content" id="content" cols="30" rows="10" class="directions">Share what you observe about the image</textarea>
                                 <p class="helper"><em>(Feel free to edit the directions in the box above.)</em></p>
-                                <input type="submit">
                             </form>
                         </div>
                     </div>
@@ -194,7 +192,7 @@
                                 <div class="flex-grow-1 justify-content-start">
                                     <div class="form-inline">
                                         <label for="title">Lesson Name:</label>
-                                        <input type="text" name="title" class="mx-2">
+                                        <input type="text" name="title" class="mx-2 form-control" required>
                                         <input type="submit" value="Create and Preview" class="btn btn-color">
                                     </div>
                                 </div>

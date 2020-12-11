@@ -77,10 +77,12 @@
         .indent{
             margin-left: 80px;
         }
+        .btn-size{
+            height: 38px;
+        }
         img{
             height: 50px;
         }
-
     </style>
 </head>
 <body>
@@ -131,7 +133,7 @@
             </div>
             <div class="opt-solid">
                 <h3>Choose the options you would like to use for this lesson:</h3>
-                <form action="/update_settings" method="POST" id="settings">
+                <form action="/revise_solo/{{info.id}}" method="POST" id="settings">
                     {% csrf_token %}
                     <div class="accordion" id="first_set">
                         <div class="card">
@@ -154,10 +156,9 @@
                                     <div class="form-inline">
                                         <label for="number_likes">Maximum number of posts they can select</label>
                                         <select name="number_likes" id="number_likes" class="custom-select ml-2">
-                                            <option value="0" selected>0</option>
-                                            {% for number in list %}
+                                        {% for number in list %}
                                             <option value="{{number}}">{{number}}</option>
-                                            {% endfor %}
+                                        {% endfor %}
                                         </select>
                                     </div>
                                     <div class="accordian" id="nested_set">
@@ -203,24 +204,47 @@
                             <div class="card-header">
                                 <div class="row">
                                 <div class="flex-grow-1 justify-content-start">
-                                    <div class="form-inline">
-                                        <label for="title">Lesson Name:</label>
-                                        <input type="text" name="title" value="{{info.title}}" class="mx-2">
-                                        <input type="submit" value="Create and Preview" class="btn btn-color">
+                                        <div class="form-inline">
+                                            <label for="title">Lesson Name:</label>
+                                            <input type="text" name="title" value="{{info.title}}" class="mx-2">
+                                            <input type="submit" value="Revise and Preview" class="btn btn-color">
+                                        </div>
                                     </div>
-                                </div>
-                                    <a href="/teacher_choice_solo" class="mx-2 align-self-center">Previous Screen</a>
+                                    <button type="button" class="btn btn-danger btn-size align-self-center" data-toggle="modal" data-target="#delete_warning">Delete Lesson</button>
+                                    <a href="/single_or_double" class="btn btn-color mx-2 align-self-center">Teacher Dashboard</a>
                                     <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+                                </div>
+                                <div class="modal fade" id="delete_warning" tabindex="-1" role="dialog" aria-labelledby="deleteWarningModal" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="modal-title" id="deleteWarningModal">Are you sure?</div>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            {% if connect_lessons %}
+                                                <div class="modal-body">
+                                                    <p>Deleting this lesson will cause the following Connect Lessons to be deleted as well:</p>
+                                                    <ul>
+                                                        {% for connect_lesson in connect_lessons%}
+                                                        <li>{{connect_lesson.title}}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
+                                            <div class="modal-footer">
+                                                <button class="btn btn-danger btn-bk2 font-weight-bold mx-auto">
+                                                <a href="/delete_lesson/{{info.id}}" class="text-white">Yes, please delete</a></button>
+                                                <button data-dismiss="modal" class="btn btn-color btn-bk2 font-weight-bold mx-auto">Changed my mind...keep this lesson!</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </form>
             </div>
         </div>
-
     </div>
 
 
@@ -256,7 +280,7 @@
         $(document).on("change", "#hdg-form", function(e){
             e.preventDefault()
             $.ajax({
-                url: 'update_words',
+                url: '/update_words',
                 method: 'POST',
                 data: $(this).serialize(),
                 beforeSend: function(){
@@ -277,7 +301,7 @@
         $(document).on("change","#dir-form", function(e){
             e.preventDefault()
             $.ajax({
-                url: 'update_words',
+                url: '/update_words',
                 method: 'POST',
                 data: $(this).serialize(),
                 beforeSend: function(){
@@ -304,6 +328,8 @@
             }
             $(this).trigger('reset')
         })
+
+        $('#number_likes').val("{{info.max_likes}}").change();
 
     </script>
 </body>

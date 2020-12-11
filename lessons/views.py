@@ -82,21 +82,18 @@ def teacher_choice_solo(request):
     if 'user_id' in request.session:
 
         if request.method == "POST":
-            # render new lesson screen
+            lesson_id = request.POST['lesson']
+
+            # render lesson screen for making changes or deleting the lesson
             if request.POST['action'] == "modify":
-                context = {
-                    'lesson': Solo_Lesson.objects.get(id=request.POST['lesson'])
-                }
-                return render(request, 'revise_solo.html', context)
+                return redirect(f'/revise_solo/{lesson_id}')
 
             # redirect to view student work on a lesson
             elif request.POST['action'] == "student_work":
-                lesson_id = request.POST['lesson']
                 return redirect(f'student_work_solo/{lesson_id}')
 
             # redirect to display lesson code for students
             elif request.POST['action'] == "code":
-                lesson_id = request.POST['lesson']
                 request.session['type'] = 'single'
 
                 # make sure lesson settings are updated for teacher's request
@@ -112,7 +109,7 @@ def teacher_choice_solo(request):
                 print("The lesson id is", lesson_id)
                 return redirect(f'post_code/{lesson_id}')
 
-        # if user clicked "previous screen" on new lesson page or got here from 
+        # if user clicked "previous screen" on new lesson page or got here from single or double
         else:
             context = {
                 'lessons': User.objects.get(id=request.session['user_id']).solo_lessons.all()
@@ -129,19 +126,20 @@ def teacher_choice_double(request):
     if 'user_id' in request.session:
 
         if request.method == "POST":
+            lesson_id = request.POST['lesson']
 
             print(request.POST)
             # render new lesson screen
             if request.POST['action'] == "modify":
                 context = {
-                    'lesson': Solo_Lesson.objects.get(id=request.POST['lesson'])
+                    'lesson': Connect_Lesson.objects.get(id=request.POST['lesson'])
                 }
-                return render(request, 'revise_solo.html', context)
+                return redirect(f'revise_connect/{lesson_id}')
 
             # redirect to view student work on a lesson
             elif request.POST['action'] == "student_work":
                 lesson_id = request.POST['lesson']
-                return redirect(f'student_work_solo/{lesson_id}')
+                return redirect(f'student_work_connect/{lesson_id}')
 
             # redirect to display lesson code for students
             elif request.POST['action'] == "code":
@@ -177,6 +175,7 @@ def new_lesson(request):
 
         context = {
             'img_form': ImageForm(),
+            'list': [0,1,2,3,4,5]
         }
         return render(request, 'notice_solo.html', context)
 
@@ -252,8 +251,10 @@ def update_settings(request):
             if 'likes_allowed' in request.POST:
                 if request.POST['likes_allowed'] == 'on':
                     this_lesson.likes_allowed = True
+                    this_lesson.max_likes = request.POST['number_likes']
             else:
                 this_lesson.likes_allowed = False
+                this_lesson.max_likes = 0
 
             if 'justification_required' in request.POST:
                 if request.POST['justification_required'] == 'on':
@@ -270,6 +271,7 @@ def update_settings(request):
             this_lesson.max_likes = request.POST['number_likes']
             this_lesson.justification_text = request.POST['prompt']
             this_lesson.title = request.POST['title']
+            this_lesson.lesson_code = get_random_string(length=6)
             this_lesson.save()
 
             return redirect(f"/preview_solo_lesson/{this_lesson.id}")
@@ -285,40 +287,88 @@ def preview_solo_lesson(request, lesson_id):
         }
         return render(request, 'solo_preview.html', context)
 
-def revise_solo(request):
+def revise_solo(request, lesson_id):
     if 'user_id' in request.session:
-        lesson = Solo_Lesson.objects.last()
-        likes = justification = same_day = False
-        if lesson.likes_allowed == True:
-            likes = "checked"
+        if request.method == "POST":
+            print(request.POST)
+            this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+            if 'likes_allowed' in request.POST:
+                if request.POST['likes_allowed'] == 'on':
+                    this_lesson.likes_allowed = True
+                    this_lesson.max_likes = request.POST['number_likes']
+            else:
+                this_lesson.likes_allowed = False
+                this_lesson.max_likes = 0
 
-        if lesson.justification_required == True:
-            justification = "checked"
+            if 'justification_required' in request.POST:
+                if request.POST['justification_required'] == 'on':
+                    this_lesson.justification_required = True
+            else:
+                this_lesson.justification_required = False
 
-        if lesson.like_same_day == True:
-            same_day = "checked"
-        print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day)
-        print(likes, justification, same_day)
-        context = {
-            'info': Solo_Lesson.objects.last(),
-            'likes': likes,
-            'justification': justification,
-            'same_day': same_day
-        }
+            if 'like_same_day' in request.POST:
+                if request.POST['like_same_day'] == 'on':
+                    this_lesson.like_same_day = True
+            else:
+                this_lesson.like_same_day= False
+
+            this_lesson.justification_text = request.POST['prompt']
+            this_lesson.title = request.POST['title']
+            this_lesson.save()
+
+            return redirect(f"/preview_solo_lesson/{this_lesson.id}")
+
+
+        else:
+            lesson = Solo_Lesson.objects.get(id=lesson_id)
+            likes = justification = same_day = False
+            if lesson.likes_allowed == True:
+                likes = "checked"
+
+            if lesson.justification_required == True:
+                justification = "checked"
+
+            if lesson.like_same_day == True:
+                same_day = "checked"
+            print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day, lesson.max_likes)
+            print(likes, justification, same_day)
+            context = {
+                'info': Solo_Lesson.objects.get(id=lesson_id),
+                'likes': likes,
+                'max_likes' : lesson.max_likes,
+                'justification': justification,
+                'same_day': same_day,
+                'list': [0,1,2,3,4,5],
+                'connect_lessons': lesson.connect_lessons.all()
+            }
     return render(request, 'revise_solo.html', context)
 
-def success(request):
+def success(request, lesson_id):
     if 'user_id' in request.session:
-        lesson = Solo_Lesson.objects.last()
-        # I wonder if I should check the database to make
-        # sure there are no duplicates??
-        lesson.lesson_code = get_random_string(length=6)
-        lesson.save()
-
         context = {
-            'lesson': lesson
+            'lesson': Solo_Lesson.objects.get(id=lesson_id)
         }
         return render(request, 'success.html', context)
+
+def delete_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+        # Get any connect lessons that use this solo lesson
+        # Delete them, too.
+        this_lesson.connect_lessons.all().delete()
+        this_lesson.delete()
+
+    return redirect('/single_or_double')
+
+def duplicate_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            lesson = Solo_Lesson.objects.get(id=lesson_id)
+            lesson.id = None
+            lesson.title = request.POST['title']
+            lesson.lesson_code = get_random_string(length=6)
+            lesson.save()
+            return redirect(f"/preview_solo_lesson/{lesson.id}")
 
 def post_code(request, lesson_id):
     if 'user_id' in request.session:
@@ -363,6 +413,7 @@ def new_lesson_connect(request):
                 'posts1': Post.objects.filter(solo_lesson=lesson1),
                 'lesson2': lesson2,
                 'posts2': Post.objects.filter(solo_lesson=lesson2),
+                'list': [0,1,2,3,4,5]
             }
             return render(request, 'notice_connect.html', context)
 
@@ -429,15 +480,85 @@ def preview_connect_lesson(request, lesson_id):
             'posts2': Post.objects.filter(solo_lesson=single_lessons[1]),
         }
 
+        request.session['type'] = 'connect'
         return render(request, 'connect_preview.html', context)
 
-def connect_success(request):
+def revise_connect(request, lesson_id):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            print(request.POST)
+            this_lesson = Connect_Lesson.objects.get(id=lesson_id)
+            if 'likes_allowed' in request.POST:
+                if request.POST['likes_allowed'] == 'on':
+                    this_lesson.likes_allowed = True
+                    this_lesson.max_likes = request.POST['number_likes']
+            else:
+                this_lesson.likes_allowed = False
+                this_lesson.max_likes = 0
+
+            if 'justification_required' in request.POST:
+                if request.POST['justification_required'] == 'on':
+                    this_lesson.justification_required = True
+            else:
+                this_lesson.justification_required = False
+
+            if 'like_same_day' in request.POST:
+                if request.POST['like_same_day'] == 'on':
+                    this_lesson.like_same_day = True
+            else:
+                this_lesson.like_same_day= False
+
+            this_lesson.justification_text = request.POST['prompt']
+            this_lesson.title = request.POST['title']
+            this_lesson.save()
+
+            return redirect(f"/preview_connect_lesson/{this_lesson.id}")
+
+
+        else:
+            this_lesson = Connect_Lesson.objects.get(id=lesson_id)
+            likes = justification = same_day = False
+            if this_lesson.likes_allowed == True:
+                likes = "checked"
+
+            if this_lesson.justification_required == True:
+                justification = "checked"
+
+            if this_lesson.like_same_day == True:
+                same_day = "checked"
+            # print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day, lesson.max_likes)
+            # print(likes, justification, same_day)
+            single_lessons = this_lesson.lessons.all()
+            # print(single_lessons[0])
+            # print(single_lessons[1])
+
+        context = {
+            'connect_lesson': this_lesson,
+            'solo_lesson1':single_lessons[0],
+            'posts1': Post.objects.filter(solo_lesson=single_lessons[0]),
+            'solo_lesson2': single_lessons[1],
+            'posts2': Post.objects.filter(solo_lesson=single_lessons[1]),
+            'likes': likes,
+            'max_likes' : this_lesson.max_likes,
+            'justification': justification,
+            'same_day': same_day,
+            'list': [0,1,2,3,4,5]
+        }
+
+        return render(request, 'revise_connect.html', context)
+
+def connect_success(request, lesson_id):
     if 'user_id' in request.session:
 
         context = {
-            'lesson': Connect_Lesson.objects.last()
+            'lesson': Connect_Lesson.objects.get(id=lesson_id)
         }
         return render(request, 'connect_success.html', context)
+
+def delete_connect_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        Connect_Lesson.objects.get(id=lesson_id).delete()
+    return redirect('/single_or_double')
 # Student Actions
 
 def get_lesson(request):
@@ -456,7 +577,7 @@ def get_lesson(request):
                 if lessons2:
                     if lessons2[0].lesson_code != '':
                         this_lesson = lessons2[0]
-                    return redirect(f'/student_solo/{this_lesson.id}')
+                    return redirect(f'/student_connect/{this_lesson.id}')
             else:
                 print("makes it here")
                 messages.error(request, "Please check you typed that code correctly...")

@@ -53,18 +53,21 @@
             <div class="card">
                 <div class="card-body p-0">
                     <h5>Create a new lesson!</h5>
-                    <form action="/new_lesson_connect" method="POST" id="create_double">
+                    <form action="/new_lesson_connect" method="POST" id="create_double" class="needs-validation" novalidate>
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="lessons"><span class="font-weight-bold">Select 2 </span>single image lessons you want to connect</label>
-                            <select multiple class="form-control" name="lessons" id="lessons">
+                            <select multiple class="form-control" name="lessons" id="lessons" required>
                                 {% for lesson in solo_lessons %}
                                 <option value="{{lesson.id}}">{{lesson.title}}</option>
                                 {% endfor %}
                             </select>
                         </div>
+                        <div class="invalid-feedback">
+                            Please select 2 lessons.
+                        </div>
                         <small id="multiple_help" class="form-text text-muted ml-2">(Hold down the Control or Command button while selecting two lessons.)</small>
-                        <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Create">
+                        <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" id="waiting" disabled="disabled" value="Create">
                     </form>
                     <div class="or">
                         <div class="row">
@@ -78,7 +81,7 @@
                         </div>
                     </div>
                     <div>
-                        <form action="/teacher_choice_double" method="POST" class="m-3 needs-validated" id="use_double">
+                        <form action="/teacher_choice_double" method="POST" class="m-3" id="use_double">
                             {% csrf_token %}
                             <div class="form-inline">
                                 <label for="select_lesson" class="h4 mr-2">Select an existing lesson:</label>
@@ -94,7 +97,7 @@
                             <div class="ml-5">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="action" value="modify" id="modify" checked>
-                                    <label for="modify" class="form-check-label">Modify</label>
+                                    <label for="modify" class="form-check-label">Modify or Delete</label>
                                 </div>
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="action" value="student_work" id="student_work">
@@ -154,6 +157,18 @@
         })
         $('form#use_double input:radio#modify').change(function(){
             $('#maybe-hide').hide()
+        })
+
+        $('#lessons').click(function(){
+            var count = $("#lessons :selected").length;
+            if (count == 2){
+                if ($('#waiting').is(':disabled')){
+                    $('#waiting').removeAttr('disabled');
+                }
+                else{
+                    $('#waiting').attr('disabled','disabled');
+                }
+            }
         })
 
     </script>
