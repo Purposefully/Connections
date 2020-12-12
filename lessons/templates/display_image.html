@@ -1,13 +1,12 @@
 <div class="hdr-solid" id="replace">
     <div class="row flex-row">
         <div class="col">
-            <div class="mt-4 ml-4 flex-fill image" id="img-div">
+            <div class="mt-4 ml-4 flex-fill" id="img-div">
                 <form action="/insert_image" method="POST" id="image_form" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <p><label for="image">Click to insert an image:</label></p>
                     {{img_form.image}}
                     {% if info %}
-                        <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
+                        <img src="{{ info.image.url}}" alt="connect" class="img-fluid max-width:100% height:auto">
                     {% endif %}
                 </form>
             </div>

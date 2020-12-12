@@ -17,10 +17,6 @@
         .hdr-solid{
             background-color: #28947a;
         }
-        .image{
-            min-height: 300px;
-            border: 5px solid #6e6e6e;
-        }
         em{
             color:yellow;
         }
@@ -92,7 +88,7 @@
                 <div class="row flex-row">
                     <div class="col">
                         <div class="mt-4 ml-4 flex-fill image" id="img-div">
-                            <img src="{{ info.image.url}}" alt="connect" style="max-height:300px">
+                            <img src="{{ info.image.url}}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
                     <div class="col">
@@ -207,7 +203,7 @@
                                         <div class="form-inline">
                                             <label for="title">Lesson Name:</label>
                                             <input type="text" name="title" value="{{info.title}}" class="mx-2">
-                                            <input type="submit" value="Revise and Preview" class="btn btn-color">
+                                            <input type="submit" value="Save Changes and Preview" class="btn btn-color">
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-danger btn-size align-self-center" data-toggle="modal" data-target="#delete_warning">Delete Lesson</button>

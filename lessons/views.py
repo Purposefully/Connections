@@ -22,6 +22,7 @@ def login(request):
                 return redirect('/student_dashboard')
             else:
                 messages.error(request, "Incorrect password")
+                request.session['type'] = "login"
                 return redirect('/login')
         else:
             messages.error(request, "Email not found")
@@ -368,7 +369,7 @@ def duplicate_lesson(request, lesson_id):
             lesson.title = request.POST['title']
             lesson.lesson_code = get_random_string(length=6)
             lesson.save()
-            return redirect(f"/preview_solo_lesson/{lesson.id}")
+            return redirect(f"/revise_solo/{lesson.id}")
 
 def post_code(request, lesson_id):
     if 'user_id' in request.session:
@@ -592,10 +593,21 @@ def get_solo_lesson(request, lesson_id):
         posts = Post.objects.filter(solo_lesson=this_lesson)
         this_user = User.objects.get(id=request.session['user_id'])
 
+        # Check how many likes user has selected for posts in this lesson
+        liked_posts = []
+        for post in posts:
+            liked_posts += (list(Like.objects.filter(post=post, user=this_user)))
+        # print("liked posts", liked_posts)
+        num_likes = len(liked_posts)
+        print("number of likes", num_likes)
+        request.session['num_likes'] = num_likes
+
         context = {
             'lesson': this_lesson,
             'posts': posts,
-            'user': this_user
+            'user': this_user,
+            'likes': Like.objects.filter(user=this_user),
+            # 'num_likes': num_likes
         }
 
         # Check to see if student already posted on this lesson
@@ -610,43 +622,77 @@ def get_solo_lesson(request, lesson_id):
     return redirect('/')
 
 def student_posted(request, lesson_id):
+    print("request.session", request.session['user_id'])
     if 'user_id' in request.session:
-        # save post to the database
-        this_user = User.objects.get(id=request.session['user_id'])
-        this_lesson = Solo_Lesson.objects.get(id=lesson_id)
-        Post.objects.create(
-            content = request.POST['content'],
-            user = this_user,
-            solo_lesson = this_lesson
-        )
-        # send student somewhere
-        if this_lesson.like_same_day == False:
-            return redirect('/thank_you')
-        else:
-            context = {
-                'lesson': this_lesson,
-                'posts': Post.objects.filter(solo_lesson=this_lesson),
-                'user': this_user
-            }
-            return render(request, 'notice_class.html', context)
+        if request.method == "POST":
+            # save post to the database
+            this_user = User.objects.get(id=request.session['user_id'])
+            this_lesson = Solo_Lesson.objects.get(id=lesson_id)
+            Post.objects.create(
+                content = request.POST['content'],
+                user = this_user,
+                solo_lesson = this_lesson
+            )
+            # send student somewhere
+            print("like same day", this_lesson.like_same_day)
+            if this_lesson.like_same_day == False:
+                return redirect('/thank_you')
+            else:
+                posts = Post.objects.filter(solo_lesson=this_lesson)
+                # Check how many likes user has selected for posts in this lesson
+                liked_posts = []
+                for post in posts:
+                    liked_posts += (list(Like.objects.filter(post=post, user=this_user)))
+                # print("liked posts", liked_posts)
+                num_likes = len(liked_posts)
+                # print("number of likes", num_likes)
+                request.session['num_likes'] = num_likes
+                context = {
+                    'lesson': this_lesson,
+                    'posts': Post.objects.filter(solo_lesson=this_lesson),
+                    'user': this_user,
+                    'likes': Like.objects.filter(user=this_user),
+                    # 'num_likes': num_likes
+                }
+                return render(request, 'notice_class.html', context)
     return redirect('/')
 
-def add_like(request, post_id):
+def add_like(request):
     if 'user_id' in request.session:
+        if request.method == "POST":
 
-        # Create like
-        this_user = User.objects.get(id=request.session['user_id'])
-        this_post = Post.objects.get(id=post_id)
-        Like.objects.create(
-            justification = request.POST['justification'],
-            user = this_user,
-            post = this_post
-        )
-        context = {
-            'lesson': this_lesson,
-            'user': this_user
-        }
-        return render(request, 'update_post.html', context)
+            print(request.POST)
+            # Create like
+            this_user = User.objects.get(id=request.session['user_id'])
+            this_post = Post.objects.get(id=request.POST['post_id'])
+            Like.objects.create(
+                justification = request.POST['justification'],
+                user = this_user,
+                post = this_post
+            )
+
+            # Check how many likes user has selected for posts in this lesson
+            this_lesson_id = this_post.solo_lesson.id
+            these_posts = Post.objects.filter(solo_lesson=this_lesson_id)
+            liked_posts = []
+            for post in these_posts:
+                liked_posts += (list(Like.objects.filter(post=post, user=this_user)))
+            # print("liked posts", liked_posts)
+            num_likes = len(liked_posts)
+            # print("number of likes", num_likes)
+
+            if num_likes >= Solo_Lesson.objects.get(id=this_lesson_id).max_likes:
+                context = {
+                    'num_likes': num_likes
+                }
+                return render(request, 'finished_selecting.html', context)
+
+            context = {
+                'post': this_post,
+                'user': this_user,
+                'likes': Like.objects.filter(user=this_user)
+            }
+            return render(request, 'update_likes.html', context)
 
 def get_connect_lesson(request, lesson_id):
     if 'user_id' in request.session:

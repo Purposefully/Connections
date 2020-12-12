@@ -17,11 +17,6 @@
         .hdr-solid{
             background-color: #28947a;
         }
-        #image{
-            height: 300px;
-            width: 300px;
-            border: 5px solid #6e6e6e;
-        }
         mark{
             color:red;
         }
@@ -91,7 +86,7 @@
                 <div class="row flex-row">
                     <div class="col">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{{ lesson.image.url }}" alt="">
+                            <img src="{{ lesson.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
                     <div class="col">
