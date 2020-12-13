@@ -17,10 +17,6 @@
         .hdr-solid{
             background-color: #28947a;
         }
-        .image{
-            min-height: 300px;
-            border: 5px solid #6e6e6e;
-        }
         em{
             color:yellow;
         }
@@ -97,20 +93,20 @@
                 <div class="row flex-row">
                     <div class="col-4">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{{ solo_lesson1.image.url }}" alt="">
+                            <img src="{{ solo_lesson1.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
                     <div class="col-4">
                         <div id="title" class="mt-2">
-                            <h3>{{connect_lesson.heading}}</h3>
+                            <h3>{{lesson.heading}}</h3>
                         </div>
                         <div>
-                            <p>{{connect_lesson.content}}</p>
+                            <p>{{lesson.content}}</p>
                         </div>
                     </div>
                     <div class="col-4">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{{ solo_lesson2.image.url }}" alt="">
+                            <img src="{{ solo_lesson2.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
                 </div>

@@ -80,7 +80,9 @@
                             <h3>Review your classmates responses.</h3>
                             <p>Choose the {{lesson.max_likes}} most insightful ideas by clicking on them.</p>
                         </div>
-                        <div id="update_likes" data-numlikes="{{num_likes}}"></div>
+                        <div id="updatelikes">
+                            <input type="hidden" value="{{num_likes}}" id="something">
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -167,6 +169,8 @@
         //     return false;
         // })
 
+
+
         $('#just').on('submit', function(e){
             e.preventDefault();
             console.log('form submitted');
@@ -181,12 +185,12 @@
                     console.log("this is the server's response", serverResponse);
                     $('#justify').modal('hide');
                     $('#switch').attr('src', '{% static "img/light_on.png" %}');
-                    $('#update_likes').html(serverResponse);
-                    var info = $('div#update_likes');
-                    var maxLikes = $('div#maxLikes');
-                    // console.log(info.data('numlikes'));
-                    // console.log(maxLikes.data('maxlikes'));
-                    if(info.data('numlikes') >= maxLikes.data('maxlikes')) {
+                    $('#updatelikes').html(serverResponse);
+                    var some = $('#something');
+                    var maxLikes = $('#maxLikes');
+                    console.log(maxLikes.data('maxlikes'));
+                    console.log("some inside ajax", some.attr("value"));
+                    if(some.attr("value") >= maxLikes.data('maxlikes')) {
                         window.location.replace("/thank_you");
                         return false;
                     }
