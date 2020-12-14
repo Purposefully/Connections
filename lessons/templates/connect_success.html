@@ -29,26 +29,42 @@
             height: 50px;
         }
         a{
-            color: yellow;
+            color: #28947a;
+            font-weight: bolder;
+        }
+        .btn-color2, .card-header, .card-footer{
+            background-color: #28947a;
+            color:white;
         }
     </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center">
-        <!-- <div class="flex-col"></div> -->
-        <div class="card card-color">
+        <div class="card">
             <div class="card-header">
                 <h1 class="text-center">Congratulations!</h1>
             </div>
             <div class="card-body text-center">
                 <h2>Your lesson has been created.</h2>
-                <h3>Here's a link you can share with your students:</h3>
-                <a href="/student_connect/{{lesson.id}}">/student_connect/{{lesson.id}}</a>
+                <h3 class="mb-5">Here's a link you can share with your students:</h3>
+                <a href="/student_connect/{{lesson.id}}" class="h3">localhost:8000/student_connect/{{lesson.id}}</a>
             </div>
-            <div class="card-footer">
-                <a href="/revise_connect" class="btn btn-color btn-bk2 mx-auto font-weight-bold">Duplicate this lesson for another class</a>
-                <a href="/single_or_double" class="btn btn-color btn-bk3 mx-auto font-weight-bold">Return to Teacher Dashboard</a>
-                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+            <div class="card-footer mt-5">
+                <a href="#dup_form" class="btn btn-color btn-bk2 mx-auto font-weight-bold" data-toggle="collapse">Duplicate this lesson for another class</a>
+                <a href="/single_or_double" class="btn btn-color btn-bk3 ml-2 font-weight-bold">Return to Teacher Dashboard</a>
+                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together" class="ml-2">
+            </div>
+            <div class="collapse" id="dup_form">
+                <div class="card card-body">
+                    <form action="/duplicate_connect/{{lesson.id}}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-inline">
+                            <label for="title" class="font-weight-bold">New Name:</label>
+                            <input type="text" name="title" class="mx-2 form-control" required>
+                            <input type="submit" value="Create and Edit" class="btn btn-color2 font-weight-bold">
+                        </div>
+                    </form>
+                </div>
             </div>
 
 

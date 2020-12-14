@@ -518,6 +518,7 @@ def revise_connect(request, lesson_id):
 
         else:
             this_lesson = Connect_Lesson.objects.get(id=lesson_id)
+            print(this_lesson.__dict__)
             likes = justification = same_day = False
             if this_lesson.likes_allowed == True:
                 likes = "checked"
@@ -530,8 +531,8 @@ def revise_connect(request, lesson_id):
             # print(lesson.likes_allowed, lesson.justification_required, lesson.like_same_day, lesson.max_likes)
             # print(likes, justification, same_day)
             single_lessons = this_lesson.lessons.all()
-            # print(single_lessons[0])
-            # print(single_lessons[1])
+            print(single_lessons[0])
+            print(single_lessons[1])
 
         context = {
             'connect_lesson': this_lesson,
@@ -560,6 +561,21 @@ def delete_connect_lesson(request, lesson_id):
     if 'user_id' in request.session:
         Connect_Lesson.objects.get(id=lesson_id).delete()
     return redirect('/single_or_double')
+
+def duplicate_connect_lesson(request, lesson_id):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            lesson = Connect_Lesson.objects.get(id=lesson_id)
+            # get the single lessons in the many-to-many field
+            single_lessons = lesson.lessons.all()
+            lesson.id = None
+            lesson.title = request.POST['title']
+            lesson.lesson_code = get_random_string(length=6)
+            lesson.save()
+            # add the single lessons to the many-to-many field of duplicated lesson
+            lesson.lessons.set(single_lessons)
+            return redirect(f"/revise_connect/{lesson.id}")
+
 # Student Actions
 
 def get_lesson(request):

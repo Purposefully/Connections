@@ -13,7 +13,7 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
-        .btn-color{
+        .btn-color, .card-header{
             background-color: #28947a;
             color: white;
         }
@@ -27,9 +27,11 @@
     </style>
 </head>
 <body>
-    <h1 class="text-center">Student Dashboard</h1>
     <div class="container d-flex justify-content-center">
         <div class="card w-50">
+            <div class="card-header">
+                <h1 class="text-center">Student Dashboard</h1>
+            </div>
             <div class="card-body">
                 {% if messages %}
                 <div class="alert alert-danger text-center">

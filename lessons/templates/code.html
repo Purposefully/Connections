@@ -17,7 +17,7 @@
             background-color: #28947a;
             color: white;
         }
-        .btn-color{
+        .btn-color, .card-body{
             background-color: white;
             color: #28947a;
         }
@@ -26,7 +26,7 @@
             width: 130px;
         }
         img{
-            width: 200px;
+            width: 70%;
         }
     </style>
 </head>
@@ -38,8 +38,8 @@
                 <h1 class="text-center">Here's today's code:</h1>
             </div>
             <div class="card-body text-center">
-                    <h2>{{ lesson.lesson_code }}</h2>
-                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+                    <h1 class="my-5 font-weight-bold">{{ lesson.lesson_code }}</h1>
+                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together" class="mt-5">
             </div>
             <div class="card-footer">
                 <a href="/single_or_double" class="btn btn-color btn-bk mx-auto font-weight-bold">Return to dashboard</a>

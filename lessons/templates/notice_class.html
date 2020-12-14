@@ -70,10 +70,10 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div id="title" class="mt-2">
+                        <div id="title" class="mt-3 text-white">
                             <h1>{{ lesson.heading }}</h1>
                         </div>
-                        <div id="directions">
+                        <div id="directions" class="text-white mt_2">
                             <p>{{ lesson.content }}</p>
                         </div>
                         <div class="col opt-solid mt-5" data-maxlikes="{{lesson.max_likes}}" id="maxLikes">
@@ -98,7 +98,7 @@
                         <div type="button" class="card w-25 mx-2 mb-3" data-toggle="modal" data-target="#justify" data-postid="{{post.id}}">
                             <div class="card-body row flex-row pl-1 pr-0">
                                 <div class="col-2">
-                                    <img src="{% static 'img/light_off.png' %}"  alt="" id="switch" class="ideas">
+                                    <img src="{% static 'img/light_off.png' %}"  alt="" id="switch{{post.id}}" class="ideas">
                                 </div>
                                 <div class="col-9 ml-2">
                                     <h5 class="card-title">{{post.user.name}}</h5>
@@ -178,14 +178,17 @@
                 url: '/add_like',
                 method: 'POST',
                 data: $(this).serialize(),
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse);
                     $('#justify').modal('hide');
-                    $('#switch').attr('src', '{% static "img/light_on.png" %}');
                     $('#updatelikes').html(serverResponse);
+                    var whichPost = $('#whichpost');
+                    var lightup = "#switch" + whichPost.attr("value");
+                    console.log(lightup);
+                    $(lightup).attr('src', '{% static "img/light_on.png" %}');
                     var some = $('#something');
                     var maxLikes = $('#maxLikes');
                     console.log(maxLikes.data('maxlikes'));

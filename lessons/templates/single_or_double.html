@@ -16,7 +16,7 @@
         img{
             height: 50px;
         }
-        .btn-color{
+        .btn-color, .card-header{
             background-color: #28947a;
             color: white;
         }
@@ -43,13 +43,14 @@
         </style>
 </head>
 <body>
-    <div class="container d-flex justify-content-center">
-        <div class="flex-col">
-            <div class="row justify-content-center">
-                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
-                <h1 class="text-center">Single or Double Image Lesson?</h1>
-            </div>
+    <div class="container d-flex justify-content-center flex-column">
         <div class="card">
+            <div class="card-header">
+                <div class="row justify-content-center">
+                    <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+                    <h1 class="text-center ml-3">Single or Double Image Lesson?</h1>
+                </div>
+            </div>
             <div class="card-body">
                 <p>You will need to have created two separate single image lessons before you will be able to create a lesson that connects them.</p>
                 <div class="card-deck d-flex justify-content-around">

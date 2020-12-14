@@ -17,7 +17,7 @@
         img{
             height: 50px;
         }
-        .btn-color{
+        .btn-color, .card-header{
             background-color: #28947a;
             color: white;
         }
@@ -45,78 +45,79 @@
 </head>
 <body>
     <div class="container d-flex justify-content-center">
-        <div class="flex-col">
-            <div class="row justify-content-center">
-                <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
-                <h1 class="text-center">What do you want to do?</h1>
+        <div class="card">
+            <div class="card-header">
+                <div class="row justify-content-center mx-3">
+                    <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+                    <h1 class="text-center ml-3">What do you want to do?</h1>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-body p-0">
-                    <h5>Create a new lesson!</h5>
-                    <form action="/new_lesson_connect" method="POST" id="create_double" class="needs-validation" novalidate>
+            <div class="card-body p-0 mx-3">
+                <h5 class="mt-2">Create a new lesson!</h5>
+                <form action="/new_lesson_connect" method="POST" id="create_double" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="lessons"><span class="font-weight-bold">Select 2 </span>single image lessons you want to connect</label>
+                        <select multiple class="form-control" name="lessons" id="lessons" required>
+                            {% for lesson in solo_lessons %}
+                            <option value="{{lesson.id}}">{{lesson.title}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="invalid-feedback">
+                        Please select 2 lessons.
+                    </div>
+                    <small id="multiple_help" class="form-text text-muted ml-2">(Hold down the Control or Command button while selecting two lessons.)</small>
+                    <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" id="waiting" disabled="disabled" value="Create">
+                </form>
+                <div class="or">
+                    <div class="row">
+                        <hr class="round mr-0 my-auto">
+                        <hr class="line mx-0 my-auto">
+                        <hr class="round ml-0 my-auto">
+                        <h4 class="mx-3 mt-2">OR</h4>
+                        <hr class="round mr-0 my-auto">
+                        <hr class="line mx-0 my-auto">
+                        <hr class="round ml-0 my-auto">
+                    </div>
+                </div>
+                <div>
+                    <form action="/teacher_choice_double" method="POST" class="m-3" id="use_double">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="lessons"><span class="font-weight-bold">Select 2 </span>single image lessons you want to connect</label>
-                            <select multiple class="form-control" name="lessons" id="lessons" required>
-                                {% for lesson in solo_lessons %}
+                        <div class="form-inline">
+                            <label for="select_lesson" class="h4 mr-2">Select an existing lesson:</label>
+                            <select name="lesson" id="lesson" class="custom-select mr-2" required>
+                                <option value="">Choose lesson...</option>
+                                {% for lesson in connect_lessons %}
                                 <option value="{{lesson.id}}">{{lesson.title}}</option>
                                 {% endfor %}
                             </select>
+                            <div class="invalid-feedback">Please select a lesson</div>
                         </div>
-                        <div class="invalid-feedback">
-                            Please select 2 lessons.
-                        </div>
-                        <small id="multiple_help" class="form-text text-muted ml-2">(Hold down the Control or Command button while selecting two lessons.)</small>
-                        <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" id="waiting" disabled="disabled" value="Create">
-                    </form>
-                    <div class="or">
-                        <div class="row">
-                            <hr class="round mr-0 my-auto">
-                            <hr class="line mx-0 my-auto">
-                            <hr class="round ml-0 my-auto">
-                            <h4 class="mx-3 mt-2">OR</h4>
-                            <hr class="round mr-0 my-auto">
-                            <hr class="line mx-0 my-auto">
-                            <hr class="round ml-0 my-auto">
-                        </div>
-                    </div>
-                    <div>
-                        <form action="/teacher_choice_double" method="POST" class="m-3" id="use_double">
-                            {% csrf_token %}
-                            <div class="form-inline">
-                                <label for="select_lesson" class="h4 mr-2">Select an existing lesson:</label>
-                                <select name="lesson" id="lesson" class="custom-select mr-2" required>
-                                    <option value="">Choose lesson...</option>
-                                    {% for lesson in connect_lessons %}
-                                    <option value="{{lesson.id}}">{{lesson.title}}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="invalid-feedback">Please select a lesson</div>
+                        <h5 class="card-title text center">Action Desired:</h5>
+                        <div class="ml-5">
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="action" value="modify" id="modify" checked>
+                                <label for="modify" class="form-check-label">Modify or Delete</label>
                             </div>
-                            <h5 class="card-title text center">Action Desired:</h5>
-                            <div class="ml-5">
-                                <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="action" value="modify" id="modify" checked>
-                                    <label for="modify" class="form-check-label">Modify or Delete</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="action" value="student_work" id="student_work">
-                                    <label for="student_work" class="form-check-label">View Student Work</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="action" value="code" id="code">
-                                    <label for="code" class="form-check-label">Post the code for my class</label>
-                                </div>
-                                <div id="insert-here">
-                                </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="action" value="student_work" id="student_work">
+                                <label for="student_work" class="form-check-label">View Student Work</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="action" value="code" id="code">
+                                <label for="code" class="form-check-label">Post the code for my class</label>
+                            </div>
+                            <div id="insert-here">
+                            </div>
 
-                            </div>
-                            <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Go!">
-                        </form>
-                    <div class="card-footer btn-color">
-                        <a href="/single_or_double">Changed my mind! Back to Single vs Double, please.</a>
-                    </div>
+                        </div>
+                        <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mt-2" value="Go!">
+                    </form>
                 </div>
+            </div>
+            <div class="card-footer btn-color px-0 d-flex justify-content-center">
+                <a href="/single_or_double">Changed my mind! Back to Single vs Double, please.</a>
             </div>
         </div>
     </div>

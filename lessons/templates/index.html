@@ -25,17 +25,23 @@
             color: white;
         }
         img{
-            width: 40%;
-            margin: 30px auto;
+            width: 100%;
+            margin: auto;
         }
     </style>
 </head>
 <body>
     <div class="container d-flex flex-column">
-        <h1 class="text-center">Connections</h1>
-        <img src="{% static 'img/puzzle2.jpg' %}" alt="">
-        <a href="/login" class="btn btn-large btn-color mx-auto btn-bk border-dark font-weight-bold stretched-link">Get Started</a>
-    </div>
+        <div class="card w-50 mx-auto">
+            <div class="card-header">
+                <h1 class="text-center">Connections</h1>
+            </div>
+        <div class="card-body p-0 text-center">
+            <img src="{% static 'img/puzzle2.jpg' %}" alt="">
+        </div>
+        <div class="card-footer justify-content-center">
+            <a href="/login" class="btn btn-large btn-color mx-auto btn-bk border-dark font-weight-bold stretched-link">Get Started</a>
+        </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

@@ -62,6 +62,9 @@
             color: #28947a;
             width: auto;
         }
+        #page-footer{
+            background-color: #fcf8e3;
+        }
         .btn-color{
             background-color: #28947a;
             color: white;
@@ -186,7 +189,7 @@
                             </div>
                         </div>
                         <div class="card mb-5">
-                            <div class="card-header">
+                            <div class="card-header" id="page-footer">
                                 <div class="row">
                                 <div class="flex-grow-1 justify-content-start">
                                     <div class="form-inline">
@@ -195,7 +198,7 @@
                                         <input type="submit" value="Create and Preview" class="btn btn-color">
                                     </div>
                                 </div>
-                                    <a href="/teacher_choice" class="mx-2 align-self-center">Previous Screen</a>
+                                    <a href="/single_or_double" class="btn btn-color mx-2 align-self-center">Teacher Dashboard</a>
                                     <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
                                 </div>
                             </div>
@@ -224,9 +227,9 @@
                 data: data,
                 processData: false,
                 contentType: false,
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse)
                     $('#replace').html(serverResponse)
@@ -245,9 +248,9 @@
                 url: 'update_words',
                 method: 'POST',
                 data: $(this).serialize(),
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse)
                     $('#hdg-form').html(serverResponse)
@@ -266,9 +269,9 @@
                 url: 'update_words',
                 method: 'POST',
                 data: $(this).serialize(),
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse)
                     $('#dir-form').html(serverResponse)

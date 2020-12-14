@@ -24,6 +24,7 @@ urlpatterns = [
     path('revise_connect/<int:lesson_id>', views.revise_connect),
     path('delete_connect_lesson/<int:lesson_id>', views.delete_connect_lesson),
     path('success_connect/<int:lesson_id>', views.connect_success),
+    path('duplicate_connect/<int:lesson_id>', views.duplicate_connect_lesson),
     path('student_connect/<int:lesson_id>', views.get_connect_lesson),
     path('student_posted_connect/<int:lesson_id>', views.student_posted_connect),
     path('post_code/<int:lesson_id>', views.post_code),

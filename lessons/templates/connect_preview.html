@@ -93,11 +93,11 @@
 <body>
     <div class="container d-flex">
         <div class="flex-col flex-fill">
-            <div class="hdr-solid">
-                <div class="row flex-row">
+            <div class="hdr-solid pr-2">
+                <div class="row flex-row pr-2">
                     <div class="col-4">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{{ solo_lesson1.image.url }}" alt="">
+                            <img src="{{ solo_lesson1.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
                     <div class="col-4">
@@ -110,16 +110,16 @@
                     </div>
                     <div class="col-4">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{{ solo_lesson2.image.url }}" alt="">
+                            <img src="{{ solo_lesson2.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
                 </div>
-                <div class="row flex-row">
+                <div class="row flex-row mt-3">
                     <div class="col">
-                        <table class="table table-striped">
+                        <table class="table table-striped table-bordered ml-2 text-white">
                             <thead>
                                 <tr>
-                                    <th scope="col">Observations</th>
+                                    <th scope="col">Class Observations</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,10 +141,10 @@
                         </div>
                     </div>
                     <div class="col">
-                        <table class="table">
+                        <table class="table table-striped table-bordered mr-2 text-white">
                             <thead>
                                 <tr>
-                                    <th scope="col">Observations</th>
+                                    <th scope="col">Class Observations</th>
                                 </tr>
                             </thead>
                             <tbody>

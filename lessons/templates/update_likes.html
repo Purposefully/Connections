@@ -1,4 +1,9 @@
 <div id="updatelikes">
-    <p>You have selected {{num_likes}} posts.</p>
+    {% if num_likes == 1 %}
+    <h3 class="text-white">You have selected {{num_likes}} post.</h3>
+    {% else %}
+    <h3 class="text-white">You have selected {{num_likes}} posts.</h3>
+    {% endif %}
     <input type="hidden" value="{{num_likes}}" id="something">
+    <input type="hidden" value="{{post.id}}" id="whichpost">
 </div>
