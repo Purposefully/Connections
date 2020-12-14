@@ -128,8 +128,6 @@
                         </table>
                     </div>
                     <div class="col">
-                    </div>
-                    <div class="col">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -146,6 +144,13 @@
                         </table>
                     </div>
                 </div>
+                <div class="col opt-solid mt-5 w-50 m-auto" data-maxlikes="{{lesson.max_likes}}" id="maxLikes">
+                    <h3>Review your classmates responses.</h3>
+                    <p>Choose the {{lesson.max_likes}} most insightful ideas by clicking on them.</p>
+                </div>
+                <div id="updatelikes" class="text-center">
+                    <input type="hidden" value="{{num_likes}}" id="something">
+                </div>
                 <div class="row">
                     <div class="hdr-divide flex-fill">
                         <hr class="round mr-n1 my-auto">
@@ -154,14 +159,14 @@
                     </div>
                 </div>
                 <div class="container row pb-3 pt-0">
-                    <div class="card-deck">
+                    <div class="d-flex flex-wrap justify-content-center">
                         {% for post in connect_posts %}
-                        <div type="button" class="card mx-4" data-toggle="modal" data-target="#justify">
+                        <div type="button" class="card w-25 mx-2 mb-3" data-toggle="modal" data-target="#justify" data-postid="{{post.id}}">
                             <div class="card-body row flex-row">
                                 <div class="col-2">
-                                    <img src="{% static 'img/light_off.png' %}" pair_src="{% static 'img/light_on.png' %}" alt="" class="ideas">
+                                    <img src="{% static 'img/light_off.png' %}" alt="" class="ideas" id="switch{{post.id}}">
                                 </div>
-                                <div class="col-10">
+                                <div class="col-9 ml-2">
                                     <h5 class="card-title">{{post.user.name}}</h5>
                                     <p class="card-text">{{post.content}}</p>
                                 </div>
@@ -175,12 +180,14 @@
                     <div class="modal fade" id="justify" tabindex="-1" role="dialog" aria-labelledby="modalJustification" area-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form action="/add_like/{{post.id}}" method="POST" class="needs-validation">
+                                <form action="/add_connect_like" method="POST" id="just" class="needs-validation">
+                                {% csrf_token %}
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modalJustification">This makes me think...</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
                                     <div class="modal-body">
+                                        <input type='hidden' name="post_id" id="post_id">
                                         <textarea name="justification"cols="30" rows="2" class="form-control" required></textarea>
                                         <div class="invalid-feedback">Please share your thoughts...</div>
                                     </div>
@@ -206,35 +213,78 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 
     <script>
-        $(document).on("click", ".card", function(){
-            $(".card img").addClass("turn-on");
-        })
-        $('#submit').click(function(){
-            $('#justify').modal('hide');
-            $('.turn-on').attr("src", '{% static "img/light_on.png" %}');
-            return false;
+        // $(document).on("click", ".card", function(){
+        //     $(".card img").addClass("turn-on");
+        // })
+        // $('#submit').click(function(){
+        //     $('#justify').modal('hide');
+        //     $('.turn-on').attr("src", '{% static "img/light_on.png" %}');
+        //     return false;
+        // })
+
+        // $(document).on("change", 'form input:submit', function(e){
+        //     e.preventDefault()
+        //     $.ajax({
+        //         url: 'add_like',
+        //         method: 'POST',
+        //         data: $(this).serialize(),
+        //         beforeSend: function(){
+        //             alert("Before send");
+        //         },
+        //         success: function(serverResponse){
+        //             console.log("this is the server's response", serverResponse)
+        //             // return context with success so I can get the likes for the images?
+        //             // $('#insert-here').html(serverResponse)
+        //         },
+        //         error: function(){
+        //             alert("failed");
+        //             console.log(data)
+        //         }
+        //     })
+        //     $(this).trigger('reset')
+        // })
+
+        $('#justify').on('show.bs.modal', function(event){
+            $(event.relatedTarget).addClass('turn-on');
+            var button = $(event.relatedTarget); // post button that triggered modal
+            var recipient = button.data('postid'); // Get post id from that post button
+            var modal = $(this);
+            modal.find('#post_id').val(recipient);
         })
 
-        $(document).on("change", 'form input:submit', function(e){
-            e.preventDefault()
+        $('#just').on('submit', function(e){
+            e.preventDefault();
+            console.log('form submitted');
             $.ajax({
-                url: 'add_like',
+                url: '/add_connect_like',
                 method: 'POST',
-                data: $(this).serialize(),
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // data: $(this).serialize(),
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
-                    // return context with success so I can get the likes for the images?
-                    // $('#insert-here').html(serverResponse)
+                    console.log("this is the server's response", serverResponse);
+                    $('#justify').modal('hide');
+                    $('#updatelikes').html(serverResponse);
+                    var whichPost = $('#whichpost');
+                    var lightup = "#switch" + whichPost.attr("value");
+                    console.log(lightup);
+                    $(lightup).attr('src', '{% static "img/light_on.png" %}');
+                    var some = $('#something');
+                    var maxLikes = $('#maxLikes');
+                    console.log(maxLikes.data('maxlikes'));
+                    console.log("some inside ajax", some.attr("value"));
+                    if(some.attr("value") >= maxLikes.data('maxlikes')) {
+                        window.location.replace("/thank_you");
+                        return false;
+                    }
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
+                    console.log(data);
                 }
             })
-            $(this).trigger('reset')
+            $(this).trigger('reset');
         })
     </script>
 </body>

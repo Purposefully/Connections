@@ -79,3 +79,10 @@ class ConnectPost(models.Model):
     connect_lesson = models.ForeignKey(Connect_Lesson, related_name="connect_posts", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class ConnectLike(models.Model):
+    justification = models.TextField()
+    user = models.ForeignKey(User, related_name="connect_likes", on_delete = models.CASCADE)
+    post = models.ForeignKey(ConnectPost, related_name="connect_likes", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

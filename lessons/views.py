@@ -576,6 +576,22 @@ def duplicate_connect_lesson(request, lesson_id):
             lesson.lessons.set(single_lessons)
             return redirect(f"/revise_connect/{lesson.id}")
 
+def student_work_connect(request, lesson_id):
+    if 'user_id' in request.session:
+        this_lesson = Connect_Lesson.objects.get(id=lesson_id)
+        posts = ConnectPost.objects.filter(connect_lesson=this_lesson)
+        single_lessons = this_lesson.lessons.all()
+
+        context = {
+            'lesson': this_lesson,
+            'solo_lesson1':single_lessons[0],
+            'posts1': Post.objects.filter(solo_lesson=single_lessons[0]),
+            'solo_lesson2': single_lessons[1],
+            'posts2': Post.objects.filter(solo_lesson=single_lessons[1]),
+            'posts': posts
+        }
+        return render(request, 'student_work_connect.html', context)
+
 # Student Actions
 
 def get_lesson(request):
@@ -632,7 +648,11 @@ def get_solo_lesson(request, lesson_id):
 
         if this_users_posts:
             if this_users_posts[0].content != '':
-                return render(request, 'notice_class.html', context)
+                # check to see whether justifications are required
+                if this_lesson.justification_required == True:
+                    return render(request, 'notice_class.html', context)
+                else:
+                    return render(request, 'notice_class_no_justify.html', context)
         else:
             return render(request, 'student_solo.html', context)
     return redirect('/')
@@ -676,6 +696,7 @@ def student_posted(request, lesson_id):
 
 def add_like(request):
     if 'user_id' in request.session:
+        # When justification needed
         if request.method == "POST":
 
             print(request.POST)
@@ -711,6 +732,42 @@ def add_like(request):
                     'num_likes': num_likes
                 }
                 return render(request, 'update_likes.html', context)
+
+def add_like_no_justify(request, post_id):
+    # when no justification needed
+        # Create like
+        this_user = User.objects.get(id=request.session['user_id'])
+        this_post = Post.objects.get(id=request.POST['post_id'])
+        Like.objects.create(
+            justification = '',
+            user = this_user,
+            post = this_post
+        )
+
+        # Check how many likes user has selected for posts in this lesson
+        this_lesson_id = this_post.solo_lesson.id
+        these_posts = Post.objects.filter(solo_lesson=this_lesson_id)
+        liked_posts = []
+        for post in these_posts:
+            liked_posts += (list(Like.objects.filter(post=post, user=this_user)))
+        # print("liked posts", liked_posts)
+        num_likes = len(liked_posts)
+        print("number of likes", num_likes)
+
+        if num_likes >= Solo_Lesson.objects.get(id=this_lesson_id).max_likes:
+            context = {
+                'num_likes': num_likes
+            }
+            return render(request, 'finished_selecting.html', context)
+        else:
+            context = {
+                'post': this_post,
+                'user': this_user,
+                'likes': Like.objects.filter(user=this_user),
+                'num_likes': num_likes
+            }
+            return render(request, 'update_likes.html', context)
+
 
 def get_connect_lesson(request, lesson_id):
     if 'user_id' in request.session:
@@ -772,6 +829,44 @@ def student_posted_connect(request, lesson_id):
                 # }
                 # return render(request, 'connect_class.html', context)
     return redirect('/')
+
+def add_connect_like(request):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+
+            print(request.POST)
+            # Create like
+            this_user = User.objects.get(id=request.session['user_id'])
+            this_post = ConnectPost.objects.get(id=request.POST['post_id'])
+            ConnectLike.objects.create(
+                justification = request.POST['justification'],
+                user = this_user,
+                post = this_post
+            )
+
+            # Check how many likes user has selected for posts in this lesson
+            this_lesson_id = this_post.connect_lesson.id
+            these_posts = ConnectPost.objects.filter(connect_lesson=this_lesson_id)
+            liked_posts = []
+            for post in these_posts:
+                liked_posts += (list(ConnectLike.objects.filter(post=post, user=this_user)))
+            # print("liked posts", liked_posts)
+            num_likes = len(liked_posts)
+            print("number of likes", num_likes)
+
+            if num_likes >= Connect_Lesson.objects.get(id=this_lesson_id).max_likes:
+                context = {
+                    'num_likes': num_likes
+                }
+                return render(request, 'finished_selecting.html', context)
+            else:
+                context = {
+                    'post': this_post,
+                    'user': this_user,
+                    'likes': ConnectLike.objects.filter(user=this_user),
+                    'num_likes': num_likes
+                }
+                return render(request, 'update_likes.html', context)
 
 def thank_you(request):
     return render(request, 'thank_you.html')

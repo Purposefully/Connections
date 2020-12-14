@@ -40,6 +40,10 @@
         a{
             color: white;
         }
+        .logout-color{
+            background-color: #E5F3EC;
+            color: #016D39;
+        }
         </style>
 </head>
 <body>
@@ -58,8 +62,15 @@
                     <a href="/teacher_choice_double"class="btn btn-color btn-bk btn mx_auto font-weight-bold">Connect 2 Images Lesson</a>
                 </div>
             </div>
-            <div class="card-footer btn-color text-center">
-                <a href="/student_dashboard"> Return to Student Dashboard, please.</a>
+            <div class="card-footer btn-color">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1 text-center">
+                        <a href="/student_dashboard"> Return to Student Dashboard, please.</a>
+                    </div>
+                    <div>
+                        <a href="/logout" class="btn logout-color mx-2 font-weight-bold">Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

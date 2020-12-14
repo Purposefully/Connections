@@ -41,6 +41,10 @@
         a{
             color: white;
         }
+        .logout-color{
+            background-color: #E5F3EC;
+            color: #016D39;
+        }
         </style>
 </head>
 <body>
@@ -116,9 +120,17 @@
                     </form>
                 </div>
             </div>
-            <div class="card-footer btn-color px-0 d-flex justify-content-center">
-                <a href="/single_or_double">Changed my mind! Back to Single vs Double, please.</a>
+            <div class="card-footer btn-color d-flex align-items-center">
+                <div class="flex-grow-1 text-center">
+                    <a href="/single_or_double">Go to Single vs Double, please.</a>
+                </div>
+                <div>
+                    <a href="/logout" class="btn logout-color mx-2 font-weight-bold">Logout</a>
+                </div>
             </div>
+            <!-- <div class="card-footer btn-color px-0 d-flex justify-content-center">
+                <a href="/single_or_double">Changed my mind! Back to Single vs Double, please.</a>
+            </div> -->
         </div>
     </div>
 
@@ -135,9 +147,9 @@
                     url: 'update_options',
                     method: 'GET',
                     data: $(this).serialize(),
-                    beforeSend: function(){
-                        alert("Before send");
-                    },
+                    // beforeSend: function(){
+                    //     alert("Before send");
+                    // },
                     success: function(serverResponse){
                         console.log("this is the server's response", serverResponse)
                         $('#insert-here').html(serverResponse)

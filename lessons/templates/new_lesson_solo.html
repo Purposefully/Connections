@@ -44,6 +44,10 @@
         .indent{
             margin-left: 40px;
         }
+        .logout-color{
+            background-color: #E5F3EC;
+            color: #016D39;
+        }
         </style>
 </head>
 <body>
@@ -117,8 +121,14 @@
                         </div>
                         <input type="submit" class="btn btn-color btn-bk mx-auto font-weight-bold mb-4" value="Go!">
                     </form>
-                <div class="card-footer btn-color">
-                    <a href="/single_or_double">Changed my mind! Back to Single vs Double, please.</a>
+                </div>
+                <div class="card-footer btn-color d-flex align-items-center">
+                    <div class="flex-grow-1 text-center">
+                        <a href="/single_or_double">Go to Single vs Double, please.</a>
+                    </div>
+                    <div>
+                        <a href="/logout" class="btn logout-color mx-2 font-weight-bold">Logout</a>
+                    </div>
                 </div>
             </div>
             </div>

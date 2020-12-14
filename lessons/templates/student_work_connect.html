@@ -57,21 +57,60 @@
 </head>
 <body>
     <div class="container d-flex">
-        <div class="flex-col">
+        <div class="flex-col flex-fill">
             <div class="hdr-solid">
-                <div class="row d-flex justify-content-center">
-                    <div class="col col-auto">
+                <div class="row flex-row">
+                    <div class="col-4">
                         <div id="image" class="mt-4 ml-4">
-                            <img src="{{ lesson.image.url }}" alt="">
+                            <img src="{{ solo_lesson1.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
                         </div>
                     </div>
-                    <div class="col col-auto">
-                        <div id="title" class="mt-2 text-white">
-                            <h1>{{ lesson.heading }}</h1>
+                    <div class="col-4">
+                        <div id="title" class="mt-2">
+                            <h3>{{lesson.heading}}</h3>
                         </div>
-                        <div id="directions" class="text-white">
-                            <p>{{ lesson.content }}</p>
+                        <div>
+                            <p>{{lesson.content}}</p>
                         </div>
+                    </div>
+                    <div class="col-4">
+                        <div id="image" class="mt-4 ml-4">
+                            <img src="{{ solo_lesson2.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-row">
+                    <div class="col">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Observations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in posts1 %}
+                                <tr>
+                                    <td>{{post.content}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Observations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in posts2 %}
+                                <tr>
+                                    <td>{{post.content}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="row">
@@ -81,13 +120,13 @@
                         <hr class="round ml-n1 my-auto">
                     </div>
                 </div>
-                <div class="container pb-3 pt-0">
+                <div class="container row pb-3 pt-0">
                     <div class="d-flex flex-wrap justify-content-center">
                         {% for post in posts %}
-                        <div class="card w-25 mx-2 mb-3">
-                            <div class="card-body row flex-row pl-1 pr-0">
+                        <div type="button" class="card w-25 mx-2 mb-3" data-toggle="modal" data-target="#justify">
+                            <div class="card-body row flex-row">
                                 <div class="col-2">
-                                    <img src="{% static 'img/light_off.png' %}" alt="" class="ideas">
+                                    <img src="{% static 'img/light_off.png' %}" pair_src="{% static 'img/light_on.png' %}" alt="" class="ideas">
                                 </div>
                                 <div class="col-9 ml-2">
                                     <h5 class="card-title">{{post.user.name}}</h5>
@@ -97,10 +136,9 @@
                         </div>
                         {% endfor %}
                     </div>
-                </div>
-            </div>
+                </div>  
             <div class="opt-solid py-3">
-                <a href="/teacher_choice_solo" class="btn btn-color btn-bk mx-auto font-weight-bold">Return to Teacher Dashboard</a>
+                <a href="/single_or_double" class="btn btn-color btn-bk mx-auto font-weight-bold">Return to Teacher Dashboard</a>
             </div>
         </div>
     </div>
