@@ -132,11 +132,30 @@ ___
     ```
     pip install -r requirements.txt
     ```
-6. Run a local server
+6.  Move into the Connections app
+    ```
+    cd Connections
+    ```
+7.  Get a random secret key.  https://miniwebtool.com/django-secret-key-generator/ is one option
+
+8.  Create a secrets.py file and include a secret key
+    ```
+    notepad secrets.py
+    ```
+    Choose yes to create the file.
+    Then type the following into the file.  Save and close.
+    ```
+    secret='(paste secret key here)'
+    ```
+9.  Move out of the app
+    ``` 
+    cd..
+    ```
+10. Run a local server
     ```
     python manage.py runserver
     ```
-7.  Open browser
+11.  Open browser
     ```
     localhost8000:
     ```
