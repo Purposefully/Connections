@@ -648,6 +648,9 @@ def get_solo_lesson(request, lesson_id):
 
         if this_users_posts:
             if this_users_posts[0].content != '':
+
+                # check to see if likes are requested
+
                 # check to see whether justifications are required
                 if this_lesson.justification_required == True:
                     return render(request, 'notice_class.html', context)
