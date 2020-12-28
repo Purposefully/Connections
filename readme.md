@@ -63,7 +63,7 @@ ___
 [Return to Table of Contents](#Table-of-Contents)
 ___
 
-## Screenshots -- Connections
+## Screenshots
 
 ![Landing Page](/Screenshots/1landing_page.png?raw=true)
 ![Login/Register](/Screenshots/2login_reg.png?raw=true)
