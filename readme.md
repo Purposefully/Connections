@@ -19,7 +19,9 @@ ___
 
 ## Background
 While teaching algebra, I often used the following math instructional routines in my lessons to prompt student thinking and communication and sense-making:
-* [Which One Doesn't Belong?](https://wodb.ca/)
+<!-- * [Which One Doesn't Belong?](https://wodb.ca/) -->
+<a href="https://wodb.ca/" target="_blank" rel="noopener noreferrer">Which One Doesn't Belong?</a> 
+
 * [What do you notice?  What do you wonder?](https://www.youtube.com/watch?v=a-Fth6sOaRA)
 * [Connecting Representations](https://curriculum.newvisions.org/math/course/getting-started/instructional-routine-connecting-representations/#:~:text=Connecting%20Representations%20has%20these%20five%20main%20parts%3A%201,Study%20Connections%204%20Create%20a%20Representation%205%20Meta-Reflection)
 
@@ -165,17 +167,3 @@ These steps work on Windows and assume you have Python
         ```
 
 [Return to Table of Contents](#Table-of-Contents)
-
-
-(function() {
-  var links = document.links;
-  for (var i = 0, linksLength = links.length; i < linksLength; i++) {
-    if (links[i].hostname != window.location.hostname) {
-      links[i].target = "_blank";
-      links[i].setAttribute("rel", "noopener noreferrer");
-      links[i].className += " externalLink";
-    } else {
-      links[i].className += " localLink";    
-    }
-  }
-})();
