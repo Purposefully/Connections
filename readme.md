@@ -10,7 +10,7 @@ ___
 * [Background](#Background)
 * [Features](#Features)
 * [Technologies Used](#Technologies-Used)
-* [Screenshots](#Screenshots----Purposeful-Groups-App)
+* [Screenshots](#Screenshots)
 * [Functionality](#Functionality)
 * [Design](#Design)
 * [Running Locally](#Running-Locally)
@@ -19,9 +19,7 @@ ___
 
 ## Background
 While teaching algebra, I often used the following math instructional routines in my lessons to prompt student thinking and communication and sense-making:
-<!-- * [Which One Doesn't Belong?](https://wodb.ca/) -->
-<a href="https://wodb.ca/" target="_blank" rel="noopener noreferrer">Which One Doesn't Belong?</a> 
-
+* [Which One Doesn't Belong?](https://wodb.ca/)
 * [What do you notice?  What do you wonder?](https://www.youtube.com/watch?v=a-Fth6sOaRA)
 * [Connecting Representations](https://curriculum.newvisions.org/math/course/getting-started/instructional-routine-connecting-representations/#:~:text=Connecting%20Representations%20has%20these%20five%20main%20parts%3A%201,Study%20Connections%204%20Create%20a%20Representation%205%20Meta-Reflection)
 
