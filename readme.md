@@ -1,19 +1,19 @@
 # Connections
 
-### Guided learning app facilitating math instructional routines: Which One Doesn’t Belong? What do you notice? and Connecting Representations
+### *Guided learning app facilitating math instructional routines:*  
+> Which One Doesn’t Belong?   
+> What do you notice?  What do you wonder?  
+> Connecting Representations
 ___
 
 ## Table of Contents
 * [Background](#Background)
 * [Features](#Features)
 * [Technologies Used](#Technologies-Used)
-* [Screenshots -- Purposeful Groups App](#Screenshots----Purposeful-Groups-App)
-* [Screenshots -- Google Scripts App](#Screenshots----Google-Scripts-App)
+* [Screenshots](#Screenshots----Purposeful-Groups-App)
 * [Functionality](#Functionality)
 * [Design](#Design)
-* [Classroom Use & Impact](#Classroom-Use-and-Impact)
 * [Running Locally](#Running-Locally)
-* [Google Scripts App](#Google-Scripts-App)
 
 ___
 
@@ -24,7 +24,7 @@ While teaching algebra, I often used the following math instructional routines i
 * [Connecting Representations](https://curriculum.newvisions.org/math/course/getting-started/instructional-routine-connecting-representations/#:~:text=Connecting%20Representations%20has%20these%20five%20main%20parts%3A%201,Study%20Connections%204%20Create%20a%20Representation%205%20Meta-Reflection)
 
 When Covid-19 sent us all home to distance teach and learn, I wished for a way to at least partially replicate these powerful routines online.  This Connections app is a good start.
- 
+
 [Return to Table of Contents](#Table-of-Contents)
 
 ___
@@ -56,7 +56,7 @@ ___
 ## Technologies Used
 * Python Django -- allows for future scalability
 * HTML, CSS, and Bootstrap -- clean, responsive UI
-* AJAX, jQuery, and RESTful routing -- render 24+ HTML templates and minimize page reloads for smooth intuitive navigation and enhanced UX
+* AJAX, jQuery, and RESTful routing -- render 24+ HTML templates while minimizing page reloads for smooth intuitive navigation and enhanced UX
 * SQLite3 -- one-to-many and many-to-many relationships to connect users and lessons and allow for posts and "likes"
 * HTML and Bootstrap validations as well as server-side validations and Bcrypt for secure login
 
@@ -65,21 +65,21 @@ ___
 
 ## Screenshots -- Connections
 
-![Landing Page](/images/1landing_page.png?raw=true)
-![Login/Register](/images/2login_reg.png?raw=true)
-![Student Dashboard](/3student_dashboard.png?raw=true)
-![Single or Double Image Lesson](/images/4single_or_double.png?raw=true)
-![Single Image Lesson Options](/images/5single_options.png?raw=true)
-![Create New Single Image Lesson](/images/6new_single_lesson.png?raw=true)
-![Single Image Lesson Preview](/images/7lesson_preview.png?raw=true)
-![Successfully Created, Link Provided](/images/8success.png?raw=true)
-![Code for Students](/images/9Code_for_students.png?raw=true)
-![Justifications](/images/10justifications.png?raw=true)
-!["Liking" classmates' posts](/images/11selecting_classmates_posts.png?raw=true)
-![View Student Work](/images/12_view_student_work.png?raw=true)
-![Double Image Lesson Options](/images/13double_options.png?raw=true)
-![Edit Double Image Lesson](/images/14modify_double_lesson.png?raw=true)
-![View Student Work Dougle Image Lesson](/images/15view_student_work_double_lesson.png?raw=true)
+![Landing Page](/Screenshots/1landing_page.png?raw=true)
+![Login/Register](/Screenshots/2login_reg.png?raw=true)
+![Student Dashboard](/Screenshots/3student_dashboard.png?raw=true)
+![Single or Double Image Lesson](/Screenshots/4single_or_double.png?raw=true)
+![Single Image Lesson Options](/Screenshots/5single_options.png?raw=true)
+![Create New Single Image Lesson](/Screenshots/6new_single_lesson.png?raw=true)
+![Single Image Lesson Preview](/Screenshots/7lesson_preview.png?raw=true)
+![Successfully Created, Link Provided](/Screenshots/8success.png?raw=true)
+![Code for Students](/Screenshots/9Code_for_students.png?raw=true)
+![Justifications](/Screenshots/10justifications.png?raw=true)
+!["Liking" classmates' posts](/Screenshots/11selecting_classmates_posts.png?raw=true)
+![View Student Work](/Screenshots/12_view_student_work.png?raw=true)
+![Double Image Lesson Options](/Screenshots/13double_options.png?raw=true)
+![Edit Double Image Lesson](/Screenshots/14modify_double_lesson.png?raw=true)
+![View Student Work Dougle Image Lesson](/Screenshots/15view_student_work_double.png?raw=true)
 
 [Return to Table of Contents](#Table-of-Contents)
 
@@ -109,7 +109,7 @@ ___
 
 ## Running Locally
 
-*  These steps work on Windows and assume you have Python
+These steps work on Windows and assume you have Python
 1. Create virtual environment
     ```
     python -m venv name
@@ -119,7 +119,7 @@ ___
     ```
     call name\Scripts\activate
     ```
-    where name was the name of the virtual environment you created
+    where name is the name of the virtual environment you created
 3. Clone this repository
     ```
     git clone https://github.com/Purposefully/Connections.git
@@ -136,7 +136,7 @@ ___
     ```
     cd Connections
     ```
-7.  Get a random secret key.  https://miniwebtool.com/django-secret-key-generator/ is one option
+7.  Get a random secret key.  Using https://miniwebtool.com/django-secret-key-generator/ is one option.
 
 8.  Create a secrets.py file and include a secret key
     ```
@@ -145,21 +145,25 @@ ___
     Choose yes to create the file.
     Then type the following into the file.  Save and close.
     ```
-    secret='(paste secret key here)'
+    secret='paste secret key here'
     ```
 9.  Move out of the app
     ``` 
     cd..
     ```
-10. Run a local server
+10. Migrate
+    ```
+    python manage.py migrate
+    ```
+11. Run a local server
     ```
     python manage.py runserver
     ```
-11.  Open browser
-    ```
-    localhost8000:
-    ```
-
+12.  Open browser  
+        ```
+        localhost8000:
+        ```
+        
 [Return to Table of Contents](#Table-of-Contents)
 
 
