@@ -1,0 +1,165 @@
+body{
+    background-image: url('/static/img/NodesBrightOpq.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+a{
+    color: white;
+}
+.btm-edge{
+    border-bottom: 3px solid #25ccc2;
+}
+.card-body-edges{
+    border-style: none solid;
+    border-width: 3px;
+    border-color: #25ccc2;
+}
+.card-outline{
+    border-style: none solid solid;
+    border-width: 3px;
+    border-color: #25ccc2;
+    border-radius: .5rem;
+}
+.card-hdr-color{
+    background-color: #25ccc2;
+}
+.card-hdr-light, .card-ftr-light .white{
+    background-color: white;
+}
+.card-hdr-light{
+    border-style: solid solid none;
+    border-width: 3px;
+    border-color: #126862;
+}
+.card-ftr-light{
+    border-style: none solid solid;
+    border-width: 3px;
+    border-color: #126862;
+}
+.btn-color{
+    background-color: #25ccc2;
+    color: white;
+}
+.btn-reverse-color{
+    background-color: white;
+    color:  #25ccc2;
+}
+.btn-bk{
+    display: block;
+    width: 130px;
+}
+.btn-bk-lg{
+    display: block;
+    width: 230px;
+}
+.btn-block{
+    display: block;
+}
+.btn:hover{
+    color: white;
+}
+.directions{
+    width: 90%;
+}
+em{
+    color:yellow;
+}
+fieldset{
+    border: 2px solid #25ccc2;
+    background-color: #e9e9e9;
+}
+.gray{
+    background-color: #e9e9e9;
+}
+.header{
+    background-color: #25ccc2;
+    padding: .75rem 1.25rem;
+}
+.hdr-solid{
+    background-color: #25ccc2;
+}
+.hdr-divide{
+    margin: 40px 20px;
+}
+.hdr-ht{
+    max-height: 240px;
+}
+h1.light{
+    color: white;
+}
+h5{
+    color:#25ccc2;
+    font-weight: bold;
+}
+img.lg{
+    width: 100%;
+    margin: auto;
+}
+img.sm{
+    height: 50px;
+}
+.image{
+    min-height: 300px;
+    border: 5px solid #6e6e6e;
+}
+.indent{
+    margin-left: 40px;
+}
+.indent-more{
+    margin-left: 80px;
+}
+legend{
+    color:#25ccc2;
+    width: auto;
+}
+li{
+    color: red;
+}
+.logout-color{
+    background-color: #D3F4F2;
+}
+.no-radius{
+    border-radius: 0px;
+}
+.opt-solid{
+    background-color: #e9e9e9;
+}
+.or{
+    margin: 40px 20px;
+}
+.line{
+    width: 30%;
+    border-top: 5px solid #D3F4F2;
+    height: 2px;
+}
+.round{
+    width: 14px;
+    border-radius: 10px;
+    border-top: 14px solid #D3F4F2;
+}
+.line-lesson{
+    width: 97%;
+    border-top: 5px solid #e9e9e9;
+    height: 4px;
+    display: inline-block;
+}
+.round-lesson{
+    width: 14px;
+    border-radius: 10px;
+    border-top: 14px solid #e9e9e9;
+    display: inline-block;
+}
+#page-footer{
+    background-color: #e9e9e9;
+}
+#student-response{
+    position: relative;
+    left: 35%;
+    top: -95px;
+    max-width: 400px;
+    background-color: #e9e9e9;
+}
+.white{
+    background-color: white;
+}

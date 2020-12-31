@@ -6,60 +6,22 @@
     <title>Lesson Set-Up</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     {% load static %}
-    <style>
-        body{
-            background-image: url('{% static "img/nodeslinks.jpg" %}');
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        img{
-            height: 50px;
-        }
-        .btn-color, .card-header{
-            background-color: #28947a;
-            color: white;
-        }
-        .btn-bk{
-            display: block;
-            width: 230px;
-        }
-        .or{
-            margin: 40px 20px;
-        }
-        .line{
-            width: 40%;
-            border-top: 5px dashed #99CDC9;
-            height: 2px;
-        }
-        .round{
-            width: 14px;
-            border-radius: 10px;
-            border-top: 14px solid #99CDC9;
-        }
-        a{
-            color: white;
-        }
-        .logout-color{
-            background-color: #E5F3EC;
-            color: #016D39;
-        }
-        </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="container d-flex justify-content-center flex-column">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header card-hdr-color">
                 <div class="row justify-content-center">
-                    <img src="{% static 'img/puzzle2.jpg' %}" alt="4 hands putting puzzle together">
+                    <img class="sm" src="{% static 'img/PuzzleYellow.jpg' %}" alt="4 hands putting puzzle together">
                     <h1 class="text-center ml-3">Single or Double Image Lesson?</h1>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body card-body-edges">
                 <p>You will need to have created two separate single image lessons before you will be able to create a lesson that connects them.</p>
                 <div class="card-deck d-flex justify-content-around">
-                    <a href="/teacher_choice_solo" class="btn btn-color btn-bk btn mx_auto font-weight-bold">Single Image Lesson</a>
-                    <a href="/teacher_choice_double"class="btn btn-color btn-bk btn mx_auto font-weight-bold">Connect 2 Images Lesson</a>
+                    <a href="/teacher_choice_solo" class="btn btn-color btn-bk-lg btn mx_auto font-weight-bold">Single Image Lesson</a>
+                    <a href="/teacher_choice_double"class="btn btn-color btn-bk-lg btn mx_auto font-weight-bold">Connect 2 Images Lesson</a>
                 </div>
             </div>
             <div class="card-footer btn-color">

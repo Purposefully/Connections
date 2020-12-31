@@ -6,37 +6,16 @@
     <title>Connections</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     {% load static %}
-    <style>
-        body{
-            background-image: url('{% static "img/nodeslinks.jpg" %}');
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        .btn-color, .header{
-            background-color: #28947a;
-            color: white;
-        }
-        h5{
-            color:#28947a;
-            font-weight: bold;
-        }
-        .btn-block{
-            display: block;
-        }
-        li{
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="text-center mb-0">Welcome to Connections!</h1>
+            <h1 class="text-center light mb-0">Welcome to Connections!</h1>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="card mb-3">
+                <div class="card card-outline no-radius mb-3">
                     <div class="card-body">
                         <h5 class="card-title text-center">Back again?</h5>
                         <h5 class="card-title text-center">Please log in:</h5>
@@ -65,7 +44,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card card-outline no-radius">
                     <div class="card-body">
                         <h5 class="card-title text-center">New here?</h5>
                         <h5 class="card-title text-center">Please sign up:</h5>
