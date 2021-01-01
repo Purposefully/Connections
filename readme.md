@@ -1,5 +1,8 @@
 # Connections
 
+[Video Tour](https://youtu.be/LCcyI3A38RM)
+[![Video Tour](/Screenshots/1LandingPage.png?raw=true)](https://youtu.be/LCcyI3A38RM)
+
 ### *Guided learning app facilitating math instructional routines:*  
 > Which One Doesn’t Belong?   
 > What do you notice?  What do you wonder?  
@@ -10,7 +13,7 @@ ___
 * [Background](#Background)
 * [Features](#Features)
 * [Technologies Used](#Technologies-Used)
-* [Screenshots](#Screenshots)
+* [Screenshots](#More-Screenshots)
 * [Functionality](#Functionality)
 * [Design](#Design)
 * [Running Locally](#Running-Locally)
@@ -32,24 +35,35 @@ ___
 
 ## Features
 * General Features
-    * Login/Registration with validations
-    * Single image lesson uses one image
-    * Double image lesson connects two single image lessons to prompt deeper connections
+    * Login/Registration with validations  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/2LoginReg.png?raw=true" alt="Login/Register" width="300">
+    * Single image lesson uses one image  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/7PreviewStudentScreen.png?raw=true" alt="Single Image Lesson" width="300">
+    * Double image lesson connects two single image lessons to prompt deeper connections  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/16DoubleImageLesson.png?raw=true" alt="Single Image Lesson" width="300">
 * Teacher Features
-    * Upload image to use as a prompt
-    * Edit title, directions, and sentence starter for student prompt
+    * Upload image to use as a prompt and edit title and directions  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/6CreateSingleImgLesson.png?raw=true" alt="Single Image Lesson" width="300">
     * Select whether students can "like" classmates' posts
+    * Select whether posting and "liking" occur within same session or in separate sessions 
     * Limit number of classmates' posts students can "like"
     * Select whether students need to provide a justification for "liking" a posts
-    * Select whether posting and "liking" occur within same session or in separate sessions
-    * View students' posts
-    * Obtain link and code to lesson to share with students
+ 
+        <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/8ModifyLesson.png?raw=true" alt="Single Image Lesson" width="300">
+    * View students' posts  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/11ViewStudentWork.png?raw=true" alt="Single Image Lesson" width="300">
+    * Obtain link and code to lesson to share with students 
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/9SuccessScreen.png?raw=true" alt="Single Image Lesson" width="300"> 
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/13LessonCode.png?raw=true" alt="Single Image Lesson" width="300">
 * Student Features
-    * Code screen for easy access to a lesson
+    * Code screen for easy access to a lesson  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/3StudentDashboard.png?raw=true" alt="Single Image Lesson" width="300">
     * Post a response to the lesson's prompt
     * View classmates' posts
-    * If selected by teacher, "like" one or more classmates' posts
-    * If selected by teacher, provide justification for their "like(s)"
+    * If selected by teacher, "like" one or more classmates' posts  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/17Likes.png?raw=true" alt="Single Image Lesson" width="300">
+    * If selected by teacher, provide justification for their "like(s)"  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/15Justification.png?raw=true" alt="Single Image Lesson" width="300">
 
 [Return to Table of Contents](#Table-of-Contents)
 ___
@@ -64,25 +78,16 @@ ___
 [Return to Table of Contents](#Table-of-Contents)
 ___
 
-## Screenshots
-
-![Landing Page](/Screenshots/1LandingPage.png?raw=true)
-![Login/Register](/Screenshots/2LoginReg.png?raw=true)
-![Student Dashboard](/Screenshots/3StudentDashboard.png?raw=true)
-![Single or Double Image Lesson](/Screenshots/4SingleOrDouble.png?raw=true)
-![Single Image Lesson Options](/Screenshots/5SingleImgLessonOptions.png?raw=true)
-![Create New Single Image Lesson](/Screenshots/6CreateSingleImgLesson.png?raw=true)
-![Single Image Lesson Preview](/Screenshots/7PreviewStudentScreen.png?raw=true)
-![Modify Lesson, Link Provided](/Screenshots/8ModifyLesson.png?raw=true)
-![Successfully Created, Link Provided](/Screenshots/9SuccessScreen.png?raw=true)
-![Thank You Message](/Screenshots/10ThankYouMsg.png?raw=true)
-![View Student Work](/Screenshots/11ViewStudentWork.png?raw=true)
-![Lesson Options](/Screenshots/12LessonOptions.png?raw=true)
-![Lesson Code](/Screenshots/13LessonCode.png?raw=true)
-![Double Image Lesson Options](/Screenshots/14DoubleImageOptions.png?raw=true)
-![Justifications](/Screenshots/15Justification.png?raw=true)
-![Double Image Lesson](/Screenshots/16DoubleImageLesson.png?raw=true)
-![Likes](/Screenshots/17Likes.png?raw=true)
+## More Screenshots
+* Menu screens  
+    * Single or Double Image Lesson  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/4SingleOrDouble.png?raw=true" alt="Single Image Lesson" width="300">
+    * Options for Single Image Lessons  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/12LessonOptions.png?raw=true" alt="Single Image Lesson" width="300">
+    * Options for Double Image Lessons  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/14DoubleImageOptions.png?raw=true" alt="Single Image Lesson" width="300">
+* Thank you screen when student is finished  
+<img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/10ThankYouMsg.png?raw=true" alt="Single Image Lesson" width="300">
 
 [Return to Table of Contents](#Table-of-Contents)
 
