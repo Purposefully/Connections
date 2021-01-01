@@ -1,6 +1,11 @@
-<h1 style="text-align: center">Connections</h1>
 
-<p style="text-align:center"><a href="https://youtu.be/LCcyI3A38RM" alt="Video Tour">Take a Video Tour</a></p>
+<h1 style="text-align: center">
+    Connections
+</h1>
+
+<p style="text-align:center">
+    <a href="https://youtu.be/LCcyI3A38RM" alt="Video Tour">Take a Video Tour</a>
+</p>
 
 [![Video Tour](/Screenshots/1LandingPage.png?raw=true)](https://youtu.be/LCcyI3A38RM)
 
@@ -37,26 +42,42 @@ ___
 ## Features
 * General Features
     * Login/Registration with validations  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/2LoginReg.png?raw=true" alt="Login/Register" width="300">  
+
     * Single image lesson uses one image  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/7PreviewStudentScreen.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * Double image lesson connects two single image lessons to prompt deeper connections  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/16DoubleImageLesson.png?raw=true" alt="Single Image Lesson" width="300">  
+
 * Teacher Features  
     * Upload image to use as a prompt and edit title and directions  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/6CreateSingleImgLesson.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * Select whether students can "like" classmates' posts
     * Select whether posting and "liking" occur within same session or in separate sessions 
     * Limit number of classmates' posts students can "like"
     * Select whether students need to provide a justification for "liking" a posts  
+
         <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/8ModifyLesson.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * View students' posts  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/11ViewStudentWork.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * Obtain link and code to lesson to share with students 
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/9SuccessScreen.png?raw=true" alt="Single Image Lesson" width="300">   
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/13LessonCode.png?raw=true" alt="Single Image Lesson" width="300">  
+
 * Student Features
     * Code screen for easy access to a lesson  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/3StudentDashboard.png?raw=true" alt="Single Image Lesson" width="300">
     * Post a response to the lesson's prompt
     * View classmates' posts
@@ -82,12 +103,19 @@ ___
 * Menu screens  
     * Single or Double Image Lesson  
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/4SingleOrDouble.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * Options for Single Image Lessons  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/12LessonOptions.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * Options for Double Image Lessons  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/14DoubleImageOptions.png?raw=true" alt="Single Image Lesson" width="300">  
+
 * Thank you screen when student is finished  
+
 <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/10ThankYouMsg.png?raw=true" alt="Single Image Lesson" width="300">  
+
 
 [Return to Table of Contents](#Table-of-Contents)
 
