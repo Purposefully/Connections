@@ -14,6 +14,7 @@ ___
 * [Functionality](#Functionality)
 * [Design](#Design)
 * [Running Locally](#Running-Locally)
+* [Image Credits](#Image-Credits)
 
 ___
 
@@ -165,5 +166,15 @@ These steps work on Windows and assume you have Python
         ```
         localhost8000:
         ```
+
+[Return to Table of Contents](#Table-of-Contents)
+
+## Image Credits
+* Background
+Image by <a href="https://pixabay.com/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1197666">Gerd Altmann</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1197666">Pixabay</a>
+
+* Puzzle Pieces with Hands modified from Image by <a href="https://pixabay.com/users/mohamed_hassan-5229782/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3738261">mohamed Hassan</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3738261">Pixabay</a>
+
+* Lightbulb Images by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1296212">OpenClipart-Vectors</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1296212">Pixabay</a>
 
 [Return to Table of Contents](#Table-of-Contents)
