@@ -1,9 +1,9 @@
 
-<h1 style="text-align: center">
+<h1 align="center">
     Connections
 </h1>
 
-<p style="text-align:center">
+<p align="center">
     <a href="https://youtu.be/LCcyI3A38RM" alt="Video Tour">Take a Video Tour</a>
 </p>
 
@@ -63,7 +63,7 @@ ___
     * Limit number of classmates' posts students can "like"
     * Select whether students need to provide a justification for "liking" a posts  
 
-        <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/8ModifyLesson.png?raw=true" alt="Single Image Lesson" width="300">  
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/8ModifyLesson.png?raw=true" alt="Single Image Lesson" width="300">  
 
     * View students' posts  
 
@@ -78,12 +78,16 @@ ___
 * Student Features
     * Code screen for easy access to a lesson  
 
-    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/3StudentDashboard.png?raw=true" alt="Single Image Lesson" width="300">
+    <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/3StudentDashboard.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * Post a response to the lesson's prompt
     * View classmates' posts
     * If selected by teacher, "like" one or more classmates' posts  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/17Likes.png?raw=true" alt="Single Image Lesson" width="300">  
+
     * If selected by teacher, provide justification for their "like(s)"  
+
     <img src="https://github.com/Purposefully/Connections/blob/master/Screenshots/15Justification.png?raw=true" alt="Single Image Lesson" width="300">  
 
 [Return to Table of Contents](#Table-of-Contents)
