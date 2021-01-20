@@ -201,7 +201,7 @@ These steps work on Windows and assume you have Python
     ```
 12.  Open browser  
         ```
-        localhost8000:
+        localhost:8000
         ```
 
 [Return to Table of Contents](#Table-of-Contents)
