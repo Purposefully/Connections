@@ -1,6 +1,7 @@
 from django.db import models
 import re
 
+
 class UserManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
@@ -42,6 +43,7 @@ class Solo_Lesson(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Post(models.Model):
     content = models.TextField()
     number_likes = models.IntegerField(default=0)
@@ -50,12 +52,14 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Like(models.Model):
     justification = models.TextField()
     user = models.ForeignKey(User, related_name="likes", on_delete = models.CASCADE)
     post = models.ForeignKey(Post, related_name="likes", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class Connect_Lesson(models.Model):
     title = models.CharField(max_length=45)
@@ -72,6 +76,7 @@ class Connect_Lesson(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class ConnectPost(models.Model):
     content = models.TextField()
     number_likes = models.IntegerField(default=0)
@@ -79,6 +84,7 @@ class ConnectPost(models.Model):
     connect_lesson = models.ForeignKey(Connect_Lesson, related_name="connect_posts", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class ConnectLike(models.Model):
     justification = models.TextField()

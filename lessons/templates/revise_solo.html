@@ -185,9 +185,9 @@
                 data: data,
                 processData: false,
                 contentType: false,
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse)
                     $('#replace').html(serverResponse)
@@ -206,9 +206,9 @@
                 url: '/update_words',
                 method: 'POST',
                 data: $(this).serialize(),
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse)
                     $('#hdg-form').html(serverResponse)
@@ -227,9 +227,9 @@
                 url: '/update_words',
                 method: 'POST',
                 data: $(this).serialize(),
-                beforeSend: function(){
-                    alert("Before send");
-                },
+                // beforeSend: function(){
+                //     alert("Before send");
+                // },
                 success: function(serverResponse){
                     console.log("this is the server's response", serverResponse)
                     $('#dir-form').html(serverResponse)
