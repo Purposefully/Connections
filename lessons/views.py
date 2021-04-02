@@ -162,7 +162,6 @@ def insert_image(request):
         if request.method == "POST":
             form = ImageForm(request.POST, request.FILES)
             if form.is_valid():
-                print("form is valid")
                 new_lesson = form.save(commit=False)
                 # save defaults for other settings for now
                 # attach the one to many user field data
