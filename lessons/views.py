@@ -579,19 +579,13 @@ def add_like(request):
             for post in these_posts:
                 liked_posts += (list(Like.objects.filter(post=post, user=this_user)))
             num_likes = len(liked_posts)
-            if num_likes >= Solo_Lesson.objects.get(id=this_lesson_id).max_likes:
-                context = {
-                    'num_likes': num_likes
-                }
-                return render(request, 'finished_selecting.html', context)
-            else:
-                context = {
-                    'post': this_post,
-                    'user': this_user,
-                    'likes': Like.objects.filter(user=this_user),
-                    'num_likes': num_likes
-                }
-                return render(request, 'update_likes.html', context)
+            context = {
+                'post': this_post,
+                'user': this_user,
+                'likes': Like.objects.filter(user=this_user),
+                'num_likes': num_likes
+            }
+            return render(request, 'update_likes.html', context)
 
 def add_like_no_justify(request, post_id):
     # when no justification needed
@@ -610,19 +604,13 @@ def add_like_no_justify(request, post_id):
         for post in these_posts:
             liked_posts += (list(Like.objects.filter(post=post, user=this_user)))
         num_likes = len(liked_posts)
-        if num_likes >= Solo_Lesson.objects.get(id=this_lesson_id).max_likes:
-            context = {
-                'num_likes': num_likes
-            }
-            return render(request, 'finished_selecting.html', context)
-        else:
-            context = {
-                'post': this_post,
-                'user': this_user,
-                'likes': Like.objects.filter(user=this_user),
-                'num_likes': num_likes
-            }
-            return render(request, 'update_likes.html', context)
+        context = {
+            'post': this_post,
+            'user': this_user,
+            'likes': Like.objects.filter(user=this_user),
+            'num_likes': num_likes
+        }
+        return render(request, 'update_likes.html', context)
 
 def get_connect_lesson(request, lesson_id):
     if 'user_id' in request.session:

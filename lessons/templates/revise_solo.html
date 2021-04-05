@@ -185,16 +185,11 @@
                 data: data,
                 processData: false,
                 contentType: false,
-                // beforeSend: function(){
-                //     alert("Before send");
-                // },
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
                     $('#replace').html(serverResponse)
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
                 }
             })
             $(this).trigger('reset')
@@ -206,16 +201,11 @@
                 url: '/update_words',
                 method: 'POST',
                 data: $(this).serialize(),
-                // beforeSend: function(){
-                //     alert("Before send");
-                // },
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
                     $('#hdg-form').html(serverResponse)
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
                 }
             })
             $(this).trigger('reset')
@@ -227,16 +217,11 @@
                 url: '/update_words',
                 method: 'POST',
                 data: $(this).serialize(),
-                // beforeSend: function(){
-                //     alert("Before send");
-                // },
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
                     $('#dir-form').html(serverResponse)
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
                 }
             })
             $(this).trigger('reset')

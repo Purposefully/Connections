@@ -15,8 +15,8 @@
             <div class="hdr-solid px-3">
                 <div class="row flex-row">
                     <div class="col">
-                        <div id="image" class="mt-4 ml-4">
-                            <img src="{{ lesson.image.url }}" alt="" class="img-fluid max-width:100% height:auto">
+                        <div class="mt-4 ml-4">
+                            <img src="{{ lesson.image.url }}" alt="" class="med">
                         </div>
                     </div>
                     <div class="col">
@@ -45,7 +45,7 @@
                 <div class="container pb-3 pt-0 px-0">
                     <div class="d-flex flex-wrap px-0 justify-content-center">
                         {% for post in posts %}
-                        <div type="button" class="card w-30 mx-2 mb-3" data-postid="{{post.id}}">
+                        <div type="button" class="card w-25 mx-2 mb-3" data-postid="{{post.id}}">
                             <form action="" id="liked">
                                 {% csrf_token %}
                                 <input type="hidden" id="whichpost" name="post_id" value="{{post.id}} ">
@@ -78,26 +78,20 @@
     <script>
         $(document).on('click', '#liked', function(e){
             e.preventDefault();
-            console.log('form submitted');
             var whichPost = $('#whichpost');
             var lightup = "#switch" + whichPost.attr("value");
             var thepost = whichPost.attr("value");
-            console.log(thepost);
             $.ajax({
                 url: '/add_like/'+ thepost,
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse);
                     $('#updatelikes').html(serverResponse);
                     var whichPost = $('#whichpost');
                     var lightup = "#switch" + whichPost.attr("value");
-                    console.log(lightup);
                     $(lightup).attr('src', '{% static "img/light_on.png" %}');
                     var some = $('#something');
                     var maxLikes = $('#maxLikes');
-                    console.log(maxLikes.data('maxlikes'));
-                    console.log("some inside ajax", some.attr("value"));
                     if(some.attr("value") >= maxLikes.data('maxlikes')) {
                         window.location.replace("/thank_you");
                         return false;
@@ -105,7 +99,6 @@
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data);
                 }
             })
             $(this).trigger('reset');

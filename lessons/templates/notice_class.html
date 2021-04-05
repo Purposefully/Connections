@@ -106,23 +106,18 @@
 
         $('#just').on('submit', function(e){
             e.preventDefault();
-            console.log('form submitted');
             $.ajax({
                 url: '/add_like',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse);
                     $('#justify').modal('hide');
                     $('#updatelikes').html(serverResponse);
                     var whichPost = $('#whichpost');
                     var lightup = "#switch" + whichPost.attr("value");
-                    console.log(lightup);
                     $(lightup).attr('src', '{% static "img/light_on.png" %}');
                     var some = $('#something');
                     var maxLikes = $('#maxLikes');
-                    console.log(maxLikes.data('maxlikes'));
-                    console.log("some inside ajax", some.attr("value"));
                     if(some.attr("value") >= maxLikes.data('maxlikes')) {
                         window.location.replace("/thank_you");
                         return false;
@@ -130,7 +125,6 @@
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data);
                 }
             })
             $(this).trigger('reset');

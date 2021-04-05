@@ -106,12 +106,10 @@
                     method: 'GET',
                     data: $(this).serialize(),
                     success: function(serverResponse){
-                        console.log("this is the server's response", serverResponse)
                         $('#insert-here').html(serverResponse)
                     },
                     error: function(){
                         alert("failed");
-                        console.log(data)
                     }
                 })
             }

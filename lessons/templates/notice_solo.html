@@ -147,12 +147,10 @@
                 processData: false,
                 contentType: false,
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
                     $('#replace').html(serverResponse)
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
                 }
             })
             $(this).trigger('reset')
@@ -165,12 +163,10 @@
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
                     $('#hdg-form').html(serverResponse)
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
                 }
             })
             $(this).trigger('reset')
@@ -183,12 +179,10 @@
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(serverResponse){
-                    console.log("this is the server's response", serverResponse)
                     $('#dir-form').html(serverResponse)
                 },
                 error: function(){
                     alert("failed");
-                    console.log(data)
                 }
             })
             $(this).trigger('reset')
